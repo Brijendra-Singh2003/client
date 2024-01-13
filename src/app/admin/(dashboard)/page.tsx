@@ -1,10 +1,10 @@
 "use client";
 
-import Tile, { TileSkeleton } from "@/components/Tile";
-import { BarChart, DoughnutChart } from "@/components/Charts";
-import DashboardTable from "@/components/DashboardTable";
+import Tile from "@/components/admin/Tile";
+import { BarChart, DoughnutChart } from "@/components/admin/Charts";
+import DashboardTable from "@/components/admin/DashboardTable";
 import data from "./data.json";
-import ProgressBar from "@/components/ProgressBar";
+import ProgressBar from "@/components/admin/ProgressBar";
 import { BiMaleFemale } from "react-icons/bi";
 
 export default function page() {
@@ -38,9 +38,9 @@ export default function page() {
       </section>
 
       <section className="w-full p-4 flex xl:grid grid-cols-3 flex-col items-center gap-4">
-        <div className="shadow-md shadow-black col-span-2 w-full p-4 bg-zinc-900 rounded-lg flex-col gap-2 flex items-center justify-center ">
+        <div className="shadow-md shadow-black col-span-2 w-full p-4 bg-gray-900 rounded-lg flex-col gap-2 flex items-center justify-center ">
           <h1 className="text-center py-2 text-2xl">REVENUE & TRANSACTION</h1>
-          <div className="w-full max-w-3xl mx-auto flex items-center justify-center">
+          <div className="w-full aspect-[2/1] max-w-3xl mx-auto flex items-center justify-center">
             <BarChart
               data_1={[10, 8, 12, 14, 6, 10, 7]}
               data_2={[10, 6, 14, 12, 8, 10, 7]}
@@ -53,7 +53,7 @@ export default function page() {
           </div>
         </div>
 
-        <div className="shadow-md shadow-black h-full col-span-1 w-full p-4 bg-zinc-900 rounded-lg flex-col gap-2 flex items-center justify-center ">
+        <div className="shadow-md shadow-black h-full col-span-1 w-full p-4 bg-gray-900 rounded-lg flex-col gap-2 flex items-center justify-center ">
           <h1 className="text-center py-4 text-2xl">INVENTORY</h1>
           <ProgressBar
             title="Laptops"
@@ -73,7 +73,7 @@ export default function page() {
           <ProgressBar title="Jeans" percentage={60} color="rgb(51, 51, 204)" />
         </div>
 
-        <div className="shadow-md shadow-black h-[372px] w-full col-span-1 gap-4 flex flex-col items-center p-4 bg-zinc-900 rounded-lg">
+        <div className="shadow-md shadow-black w-full col-span-1 gap-4 flex flex-col items-center p-4 bg-gray-900 rounded-lg">
           <h1 className="text-center text-xl p-2">GENDER RATIO</h1>
           <p className="h-72 grid place-items-center">
             <span className="absolute scale-150 -translate-y-14">
@@ -89,8 +89,10 @@ export default function page() {
           </p>
         </div>
 
-        <div className="shadow-md shadow-black w-full max-w-[calc(100vw-32px)] overflow-x-auto col-span-2 flex flex-col gap-4 p-4 bg-zinc-900 rounded-lg">
-          <h2 className="text-center w-full text-xl p-2">TOP TRANSACTIONS</h2>
+        <div className="shadow-md shadow-black w-full max-w-[calc(100vw-32px)] overflow-x-auto col-span-2 flex flex-col gap-4 p-4 bg-gray-900 rounded-lg">
+          <h2 className="text-center w-full sticky left-0 text-xl p-2">
+            TOP TRANSACTIONS
+          </h2>
           <DashboardTable data={data.transaction} />
         </div>
       </section>

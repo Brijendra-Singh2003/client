@@ -30,9 +30,12 @@ ChartJS.register(
   Filler
 );
 
+ChartJS.defaults.color = "#ffffff";
+
 const months = ["January", "February", "March", "April", "May", "June", "July"];
 
 interface BarChartProps {
+  className?: string;
   horizontal?: boolean;
   data_1: number[];
   data_2: number[];
@@ -44,6 +47,7 @@ interface BarChartProps {
 }
 
 export const BarChart = ({
+  className,
   data_1 = [],
   data_2 = [],
   title_1,
@@ -102,7 +106,14 @@ export const BarChart = ({
     ],
   };
 
-  return <Bar width={horizontal ? "200%" : ""} options={options} data={data} />;
+  return (
+    <Bar
+      className={className}
+      width={horizontal ? "200%" : ""}
+      options={options}
+      data={data}
+    />
+  );
 };
 
 interface DoughnutChartProps {

@@ -14,7 +14,6 @@ export default function TableHOC<T extends Object>({
   columns,
   data,
   className,
-  pagenation,
 }: {
   columns: any;
   data: T[];
@@ -35,10 +34,10 @@ export default function TableHOC<T extends Object>({
     <table className={className}>
       <thead>
         {table.getHeaderGroups().map((headerGroup) => (
-          <tr className="shadow-sm shadow-black" key={headerGroup.id}>
+          <tr className=" border-b border-zinc-500" key={headerGroup.id}>
             {headerGroup.headers.map((header) => (
               <th
-                className={"text-center select-none cursor-pointer"}
+                className={"text-center text-xl p-4 select-none cursor-pointer"}
                 colSpan={header.colSpan}
                 key={header.id}
                 onClick={header.column.getToggleSortingHandler()}
@@ -58,7 +57,7 @@ export default function TableHOC<T extends Object>({
       </thead>
       <tbody>
         {table.getCenterRows().map((row) => (
-          <tr className="shadow-sm shadow-black" key={row.id}>
+          <tr className=" border-b border-zinc-500" key={row.id}>
             {row.getAllCells().map((cell) => (
               <td className="py-4 text-center" key={cell.id}>
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
