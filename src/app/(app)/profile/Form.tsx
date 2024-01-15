@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FormEvent, useState } from "react";
+import React, { useState } from "react";
 import { formData } from "./page";
 
 export default function Form({
@@ -24,7 +24,8 @@ export default function Form({
 
   function handleChange(e: any) {
     setCurrProfile((prev) => {
-      return { ...prev, [e.target.name]: e.target.value };
+      const temp = { ...prev, [e.target.name]: e.target.value };
+      return temp;
     });
   }
 
@@ -95,13 +96,14 @@ export default function Form({
 
       <div className="flex flex-col">
         <div className="py-2">Gender:</div>
-        <div>
+        <div className="flex gap-4 h-full px-4">
           <label className="flex items-center gap-2">
             <input
               name="gender"
               type="radio"
               value="male"
               defaultChecked={profile?.gender === "male"}
+              onChange={handleChange}
             />
             Male
           </label>
@@ -111,6 +113,7 @@ export default function Form({
               type="radio"
               value="female"
               defaultChecked={profile?.gender === "female"}
+              onChange={handleChange}
             />
             Female
           </label>

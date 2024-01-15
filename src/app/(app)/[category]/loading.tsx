@@ -4,9 +4,9 @@ import React from "react";
 export default async function page() {
   return (
     <>
-      <main className="bg-gray-900 flex">
+      <main className="bg-gray-900 md:grid grid-cols-4 flex">
         <Filters />
-        <div className="gap-4 flex flex-col">
+        <div className="gap-4 col-span-3 flex flex-col">
           <h1 className="p-5 text-2xl w-fit">
             <div className="h-8 w-32 bg-gray-600 rounded-md animate-pulse" />
           </h1>

@@ -103,7 +103,7 @@ export default async function page({ params }: prop) {
               this stylish printed baseball cap. Made from high-quality cotton,
               this cap is comfortable to wear and features the Windows logo
               prominently on the front. The adjustable strap in the back ensures
-              a perfect fit for any head size. Whether you're a developer,
+              a perfect fit for any head size. Whether you&apos;re a developer,
               designer, or just a fan of Windows, this cap is the perfect
               accessory for any occasion. Show your support for the operating
               system that powers the world.

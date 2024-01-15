@@ -2,7 +2,6 @@ import Collection, { CollectionSkeleton } from "@/components/collection";
 import App from "@/components/swiper";
 import { category } from "@/db/Product";
 import { headers } from "next/headers";
-import Link from "next/link";
 import { Suspense } from "react";
 
 const categories: category[] = [
@@ -22,49 +21,22 @@ export default async function Home() {
     ? true
     : false;
 
-  const res = await fetch("http://localhost:3000/api/categories");
-  const collections = (await res.json()) as collection[];
-
   return (
-    <>
-      <div className="w-screen p-2 overflow-x-auto bg-gray-900">
-        <ul className="w-fit flex gap-4 mx-auto">
-          <li className="w-fit hover:bg-gray-700 bg-gray-700 sm:bg-transparent rounded-xl cursor-pointer px-3 text-nowrap">
-            <Link href="/Topwear">Top wear</Link>
-          </li>
-          <li className="w-fit hover:bg-gray-700 bg-gray-700 sm:bg-transparent rounded-xl cursor-pointer px-3 text-nowrap">
-            <Link href="/Bottomwear">Bottom wear</Link>
-          </li>
-          <li className="w-fit hover:bg-gray-700 bg-gray-700 sm:bg-transparent rounded-xl cursor-pointer px-3 text-nowrap">
-            <Link href="/Footwear">Foot wear</Link>
-          </li>
-          <li className="w-fit hover:bg-gray-700 bg-gray-700 sm:bg-transparent rounded-xl cursor-pointer px-3 text-nowrap">
-            <Link href="/Hoodies">Hoodies</Link>
-          </li>
-          <li className="w-fit hover:bg-gray-700 bg-gray-700 sm:bg-transparent rounded-xl cursor-pointer px-3 text-nowrap">
-            <Link href="/Caps">Caps</Link>
-          </li>
-          <li className="w-fit hover:bg-gray-700 bg-gray-700 sm:bg-transparent rounded-xl cursor-pointer px-3 text-nowrap">
-            <Link href="/Mugs">Mugs</Link>
-          </li>
-          <li className="w-fit hover:bg-gray-700 bg-gray-700 sm:bg-transparent rounded-xl cursor-pointer px-3 text-nowrap">
-            <Link href="/">Mousepads</Link>
-          </li>
-        </ul>
-      </div>
-      <main>
-        <section className="py-4">
-          <App isMobile={isMobile} items={images} />
-        </section>
-        {categories.map((category) => {
-          return (
-            <Suspense fallback={<CollectionSkeleton category={category} />}>
-              <Collection category={category} />
-            </Suspense>
-          );
-        })}
-      </main>
-    </>
+    <main>
+      <section className="py-4">
+        <App isMobile={isMobile} items={images} />
+      </section>
+      {categories.map((category) => {
+        return (
+          <Suspense
+            key={category}
+            fallback={<CollectionSkeleton category={category} />}
+          >
+            <Collection category={category} />
+          </Suspense>
+        );
+      })}
+    </main>
   );
 }
 
