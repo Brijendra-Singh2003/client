@@ -23,13 +23,23 @@ type transaction = {
     status: "Processing" | "Shipped" | "Delivered",
 }
 
+type item = {
+    id: string,
+    name: string,
+    price: number,
+    discount: number,
+    image: string,
+    rating?: number,
+}
+
 type collection = {
     title: string,
-    items: {
-        id: string,
-        name: string,
-        price: number,
-        discount: number,
-        image: string,
-    }[]
+    items: item[]
+}
+
+type User = {
+    id: number;
+    email: string;
+    name: string | null;
+    role: string;
 }

@@ -1,6 +1,6 @@
 import { HiTrendingDown, HiTrendingUp } from "react-icons/hi";
 
-export default async function Tile({
+export default function Tile({
   title,
   value,
   percentage,
@@ -29,8 +29,9 @@ export default async function Tile({
       <div
         className="h-16 w-16 grad grid place-items-center rounded-full"
         style={{
-          background: `conic-gradient(${color} ${Math.abs(percentage) * 3.6
-            }deg, rgb(39 39 39) 0)`,
+          background: `conic-gradient(${color} ${
+            Math.abs(percentage) * 3.6
+          }deg, rgb(39 39 39) 0)`,
         }}
       >
         <span

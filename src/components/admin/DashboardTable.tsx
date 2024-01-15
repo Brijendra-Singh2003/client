@@ -1,3 +1,5 @@
+"use client";
+
 import { ColumnHelper, createColumnHelper } from "@tanstack/react-table";
 import TableHOC from "./Table";
 

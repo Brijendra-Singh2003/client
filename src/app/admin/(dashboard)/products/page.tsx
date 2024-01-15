@@ -1,8 +1,8 @@
 import ProductsTable from "@/components/admin/ProductsTable";
 import Link from "next/link";
+import { Suspense } from "react";
 
-export default async function Page() {
-  const data = await (await fetch("http://localhost:3000/api/products")).json();
+export default function Page() {
   return (
     <div className="bg-gray-900 h-screen overflow-y-auto pb-14 p-4">
       <div className="flex justify-between items-center h-16 p-4">
@@ -15,7 +15,9 @@ export default async function Page() {
         </Link>
       </div>
       <div className="overflow-x-auto max-w-[100vw]">
-        <ProductsTable data={data} />
+        <Suspense fallback={<h1>Loading...</h1>}>
+          <Table />
+        </Suspense>
       </div>
       <div className="w-full h-32 flex items-center justify-center gap-4">
         <button className="px-4 py-2 rounded-lg bg-blue-600">Prev</button>
@@ -33,3 +35,10 @@ export default async function Page() {
     </div>
   );
 }
+
+const Table = async () => {
+  const data = await (
+    await fetch("http://localhost:3000/api/products", { cache: "no-store" })
+  ).json();
+  return <ProductsTable data={data} />;
+};

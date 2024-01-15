@@ -57,6 +57,7 @@ export const BarChart = ({
   horizontal = false,
   labels = months,
 }: BarChartProps) => {
+  "use client";
   const options: ChartOptions<"bar"> = {
     responsive: true,
     indexAxis: horizontal ? "y" : "x",
@@ -133,6 +134,7 @@ export const DoughnutChart = ({
   legends = true,
   offset,
 }: DoughnutChartProps) => {
+  "use client";
   const doughnutData: ChartData<"doughnut", number[], string> = {
     labels,
     datasets: [
@@ -174,6 +176,7 @@ export const PieChart = ({
   backgroundColor,
   offset,
 }: PieChartProps) => {
+  "use client";
   const pieChartData: ChartData<"pie", number[], string> = {
     labels,
     datasets: [
@@ -213,6 +216,7 @@ export const LineChart = ({
   borderColor,
   labels = months,
 }: LineChartProps) => {
+  "use client";
   const options: ChartOptions<"line"> = {
     responsive: true,
     plugins: {

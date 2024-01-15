@@ -8,8 +8,8 @@ import Image from "next/image";
 import { RiShoppingBag3Fill, RiDashboardFill } from "react-icons/ri";
 import { IoIosPeople } from "react-icons/io";
 import { AiFillFileText } from "react-icons/ai";
-import { FaChartBar, FaChartPie, FaChartLine } from "react-icons/fa";
-import "../globals.css";
+import { FaChartBar } from "react-icons/fa";
+import Footer from "@/components/footer";
 
 const SidebarLink = ({
   href,
@@ -19,19 +19,21 @@ const SidebarLink = ({
   href: string;
   path: string;
   children: ReactNode;
-}) => (
-  <Link
-    className={
-      "flex gap-2 items-center px-5 py-3 rounded " +
-      (path === href
-        ? "text-white bg-gray-700"
-        : "text-gray-400 hover:bg-gray-700 hover:text-white")
-    }
-    href={href}
-  >
-    {children}
-  </Link>
-);
+}) => {
+  return (
+    <Link
+      className={
+        "flex gap-2 items-center px-5 py-3 rounded " +
+        (path === href
+          ? "text-white bg-gray-700"
+          : "text-gray-400 hover:bg-gray-700 hover:text-white")
+      }
+      href={href}
+    >
+      {children}
+    </Link>
+  );
+};
 
 export default function AdminSidebar({ children }: { children: ReactNode }) {
   const path: string = usePathname();
@@ -78,16 +80,6 @@ export default function AdminSidebar({ children }: { children: ReactNode }) {
                 <FaChartBar />
                 Bar
               </SidebarLink>
-
-              {/* <SidebarLink path={path} href="/admin/charts/pie">
-                <FaChartPie />
-                Pie
-              </SidebarLink>
-
-              <SidebarLink path={path} href="/admin/charts/line">
-                <FaChartLine />
-                Line
-              </SidebarLink> */}
             </ul>
           </div>
         </aside>
@@ -110,8 +102,8 @@ export default function AdminSidebar({ children }: { children: ReactNode }) {
             />
           </div>
           {children}
+          <Footer />
         </div>
-
       </body>
     </html>
   );
