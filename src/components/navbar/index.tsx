@@ -30,11 +30,8 @@ const Navbar = ({ session }: { session: Session }) => {
         </button>
       </form>
 
-      <div className="flex gap-4">
-        <Link
-          className="p-2 relative hover:bg-gray-700 rounded-3xl"
-          href="/cart"
-        >
+      <div className="flex gap-6">
+        <Link className="p-2 relative rounded-3xl" href="/cart">
           <span className="absolute -top-1 -right-1 text-sm bg-red-600 h-5 px-1 rounded-xl font-mono">
             0
           </span>

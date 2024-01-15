@@ -14,7 +14,7 @@ export default function SigninBtn({ session }: { session: Session }) {
     return (
       <>
         <Image
-          className="h-10 w-12 object-cover "
+          className="h-10 w-10 object-cover "
           height={100}
           width={100}
           src="https://static-assets-web.flixcart.com/fk-p-linchpin-web/fk-cp-zion/img/profile-pic-male_4811a1.svg"

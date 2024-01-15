@@ -1,7 +1,19 @@
-import Collection from "@/components/collection";
+import Collection, { CollectionSkeleton } from "@/components/collection";
 import App from "@/components/swiper";
+import { category } from "@/db/Product";
 import { headers } from "next/headers";
 import Link from "next/link";
+import { Suspense } from "react";
+
+const categories: category[] = [
+  "bottomwear",
+  "cap",
+  "footwear",
+  "hoodie",
+  "mousepad",
+  "mug",
+  "topwear",
+];
 
 export default async function Home() {
   const isMobile: boolean = headers()
@@ -44,8 +56,13 @@ export default async function Home() {
         <section className="py-4">
           <App isMobile={isMobile} items={images} />
         </section>
-        <Collection collection={collections[0]} />
-        <Collection collection={collections[1]} />
+        {categories.map((category) => {
+          return (
+            <Suspense fallback={<CollectionSkeleton category={category} />}>
+              <Collection category={category} />
+            </Suspense>
+          );
+        })}
       </main>
     </>
   );

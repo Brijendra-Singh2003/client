@@ -1,28 +1,17 @@
 import Collection from "@/components/collection";
+import { getProductById } from "@/db/Product";
 import Image from "next/image";
 import React, { FC } from "react";
 import { AiFillStar } from "react-icons/ai";
 
-export default async function page({
-  params,
-  searchParams: { category },
-}: prop) {
-  const res = await fetch(
-    `http://localhost:3000/api/categories?id=${params.id}&category=${category}`,
-    { cache: "no-store" }
-  );
-  let item: item;
-  try {
-    item = (await res.json()) as item;
-  } catch (error: any) {
-    return <div>{error.message}</div>;
-  }
+export default async function page({ params }: prop) {
+  const item = (await getProductById(+params.id)) as item;
 
   return (
     <>
       <main className="product-main bg-gray-800 flex flex-col items-center sm:items-start sm:min-w-96 sm:grid grid-cols-3">
         <Image
-          src={item.image}
+          src={item.imageUrl}
           height={400}
           width={400}
           alt=""
@@ -31,7 +20,7 @@ export default async function page({
         <div className="bg-gray-900 col-span-2 flex flex-col gap-2">
           <h1 className="font-bold px-4 pt-4">{item.name}</h1>
           <h5 className="w-fit ml-4 flex gap-1 px-1 rounded text-xs bg-green-700 items-center">
-            {item.rating}
+            4.2
             <AiFillStar />
           </h5>
           <p className="flex ml-4 gap-4 items-center">
@@ -132,7 +121,7 @@ export default async function page({
         </div>
       </main>
 
-      <Collection collection={recommends} />
+      {/* <Collection collection={recommends} /> */}
     </>
   );
 }
@@ -216,8 +205,5 @@ const recommends = {
 type prop = {
   params: {
     id: string;
-  };
-  searchParams: {
-    category: string;
   };
 };

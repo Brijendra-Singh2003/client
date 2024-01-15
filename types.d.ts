@@ -24,12 +24,18 @@ type transaction = {
 }
 
 type item = {
-    id: string,
-    name: string,
-    price: number,
-    discount: number,
-    image: string,
-    rating?: number,
+    id: number;
+    name: string;
+    description: string;
+    price: number;
+    discount: number;
+    imageUrl: string;
+    stock: number;
+    createdAt: Date;
+    updatedAt: Date;
+    brandId: number;
+    categoryId: number;
+    userId: number;
 }
 
 type collection = {

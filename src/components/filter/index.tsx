@@ -4,7 +4,7 @@ import React, { useState } from "react";
 
 export default function Filters() {
   return (
-    <form className="p-4 hidden w-64 md:relative md:flex flex-col bg-gray-900">
+    <form className="p-4 hidden md:relative col-span-1 md:flex flex-col bg-gray-900">
       {filters.map((filter) => (
         <Filter
           key={filter.title}
