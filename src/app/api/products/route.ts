@@ -1,11 +1,18 @@
 import { NextRequest, NextResponse } from "next/server"
-import { data } from "./sampleData"
+import { category, getProductsByCategory } from "@/db/Product";
 
 export async function GET(req: NextRequest, res: NextResponse) {
-    const id = req.nextUrl.searchParams.get("id");
-
-    if (id) {
-        return (new NextResponse(JSON.stringify(data.find(product => product.id === id))));
+    const category = req.nextUrl.searchParams.get("category") as category;
+    const page = req.nextUrl.searchParams.get("page");
+    if (category) {
+        if (page) {
+            const items = await getProductsByCategory(category, Number.parseInt(page), 4);
+            return (new NextResponse(JSON.stringify(items)));
+        }
+        else {
+            const items = await getProductsByCategory(category, 0, 4);
+            return (new NextResponse(JSON.stringify(items)));
+        }
     }
-    else return (new NextResponse(JSON.stringify(data)));
+    else return (new NextResponse(JSON.stringify([])));
 };

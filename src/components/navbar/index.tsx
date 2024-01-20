@@ -1,13 +1,23 @@
 import Link from "next/link";
-import React, { FC } from "react";
-import { AiOutlineSearch, AiOutlineShoppingCart } from "react-icons/ai";
+import React from "react";
+import { AiOutlineSearch } from "react-icons/ai";
 import SigninBtn from "../btns/login-btn";
 import { handleSearch } from "@/actions/search";
 import { Session } from "next-auth";
+import { getUser } from "@/db/User";
 
-const Navbar = ({ session }: { session: Session }) => {
+const Navbar = async ({ session }: { session: Session | null }) => {
+  let count = 0;
+  // if (session?.user?.email) {
+  //   const user: any = await getUser(session.user?.email, {
+  //     cart: {
+  //       select: { id: true },
+  //     },
+  //   });
+  //   count = user?.cart?.length || 0;
+  // }
   return (
-    <div className="p-4 lg:px-[10%] bg-gray-900 flex flex-wrap w-full z-10 gap-4 justify-between shadow-md sticky -top-16 sm:top-0">
+    <div className="pt-4 pb-2 px-4 lg:px-[10%] bg-blue-600 text-white flex flex-wrap w-full z-10 gap-4 justify-between sticky -top-16 sm:-top-2">
       <Link href="/" className="text-3xl font-bold">
         Logo.
       </Link>
@@ -15,7 +25,7 @@ const Navbar = ({ session }: { session: Session }) => {
       {/* search bar */}
       <form
         action={handleSearch}
-        className="hidden sm:flex w-fit flex-grow-[0.5] gap-4 bg-gray-700 focus-within:shadow-zinc-900 rounded-lg px-2 focus-within:outline focus-within:outline-1 focus-within:shadow-lg"
+        className="hidden sm:flex w-fit flex-grow-[0.5] gap-4 bg-white text-black rounded-lg px-2 focus-within:outline focus-within:outline-1 focus-within:shadow-lg"
       >
         <input
           className="bg-transparent w-full outline-none px-2"
@@ -31,22 +41,17 @@ const Navbar = ({ session }: { session: Session }) => {
       </form>
 
       <div className="flex gap-6">
-        <Link className="p-2 relative rounded-3xl" href="/cart">
-          <span className="absolute -top-1 -right-1 text-sm bg-red-600 h-5 px-1 rounded-xl font-mono">
-            0
-          </span>
-          <AiOutlineShoppingCart />
-        </Link>
-        <SigninBtn session={session} />
+        <SigninBtn session={session} count={count} />
       </div>
 
-      <div className="flex sm:hidden w-[calc(100vw-32px)] mx-auto h-10 flex-grow-[0.5] gap-4 bg-gray-700 focus-within:shadow-zinc-900 focus-within:outline rounded-lg px-2 focus-within:shadow-lg">
+      <div className="flex sm:hidden text-black w-full h-10 focus-within:shadow flex-grow-[0.5] gap-4 bg-white px-2">
         <input
           autoComplete="off"
           className="bg-transparent w-full outline-none px-2"
           type="text"
           required
           name="search-product"
+          placeholder="search products..."
         />
         <button className="h-full p-2 flex-grow">
           <AiOutlineSearch />

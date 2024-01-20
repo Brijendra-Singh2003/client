@@ -1,9 +1,12 @@
+import { Prisma, Profile } from "@prisma/client"
 import { prisma } from "./demo"
+import { DefaultArgs } from "@prisma/client/runtime/library"
 
 type user = {
-    id?: number
-    name: string
-    email: string
+    id: string;
+    email: string;
+    name: string | null | undefined;
+    image: string | null | undefined;
 }
 
 export async function AddUser(user: user) {
@@ -23,27 +26,21 @@ export async function AddUser(user: user) {
     }
 }
 
-export async function getUser(email: string) {
+export async function getUser(email: string, options: Prisma.UserSelect<DefaultArgs> | undefined) {
     try {
         const user = await prisma.user.findUnique({
             where: {
                 email: email
-            }
+            },
+            select: options
         });
+        console.log("got user: ", user);
         return user;
     } catch (error: any) {
         console.log("error while getting the user from database: ", error.message);
     } finally {
         prisma.$disconnect();
     }
-}
-
-export type Profile = {
-    userId: number,
-    firstName: string,
-    lastName?: string,
-    phone?: string,
-    gender?: 'male' | "female"
 }
 
 export async function setProfile(profile: Profile) {
@@ -64,7 +61,7 @@ export async function setProfile(profile: Profile) {
     }
 }
 
-export async function getProfile(userId: number) {
+export async function getProfile(userId: string) {
     try {
         const profile = await prisma.profile.findUnique({
             where: {
@@ -73,7 +70,53 @@ export async function getProfile(userId: number) {
         });
         return profile;
     } catch (error: any) {
-        console.log("error occured while getting profile: ", error.message);
+        console.log("error getting profile: ", error.message);
+    } finally {
+        prisma.$disconnect();
+    }
+}
+
+export async function addItemToCart(productId: number, id: string) {
+    try {
+        const new_item = await prisma.user.update({
+            where: {
+                id: id
+            },
+            data: {
+                cart: {
+                    create: {
+                        productId: productId,
+                    }
+                }
+            }
+        })
+        console.log("item added to cart cart: ", new_item);
+        return new_item;
+    } catch (error) {
+        console.error("Error adding item to cart: ", error);
+    } finally {
+        prisma.$disconnect();
+    }
+}
+
+export async function getCartItems(userId: string) {
+    try {
+        const new_items = await prisma.user.findUnique({
+            where: {
+                id: userId
+            },
+            include: {
+                cart: {
+                    include: {
+                        product: true
+                    }
+                }
+            }
+        });
+        console.log("items: ", new_items);
+        return new_items;
+    } catch (error) {
+        console.error("Error getting items from cart: ", error);
     } finally {
         prisma.$disconnect();
     }

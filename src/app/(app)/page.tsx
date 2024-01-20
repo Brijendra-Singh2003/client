@@ -5,13 +5,13 @@ import { headers } from "next/headers";
 import { Suspense } from "react";
 
 const categories: category[] = [
+  "topwear",
   "bottomwear",
-  "cap",
   "footwear",
   "hoodie",
+  "cap",
   "mousepad",
   "mug",
-  "topwear",
 ];
 
 export default async function Home() {
@@ -22,8 +22,8 @@ export default async function Home() {
     : false;
 
   return (
-    <main>
-      <section className="py-4">
+    <>
+      <section className="shadow-md">
         <App isMobile={isMobile} items={images} />
       </section>
       {categories.map((category) => {
@@ -36,19 +36,24 @@ export default async function Home() {
           </Suspense>
         );
       })}
-    </main>
+    </>
   );
 }
 
 const images = [
   {
     id: 71,
-    lg: "https://rukminim2.flixcart.com/fk-p-flap/2048/2048/image/1055923499e1913f.jpg",
-    mb: "https://rukminim2.flixcart.com/fk-p-flap/1024/1024/image/69ee89c0569e757c.jpg",
+    lg: "/1055923499e1913f.jpg",
+    mb: "/69ee89c0569e757c.jpg",
   },
   {
     id: 871,
-    lg: "https://rukminim2.flixcart.com/fk-p-flap/1600/270/image/7f4da0f887732f8e.jpg",
-    mb: "https://rukminim2.flixcart.com/fk-p-flap/1450/650/image/78980b9e33c47fc6.jpg",
+    lg: "/7f4da0f887732f8e.jpg",
+    mb: "/78980b9e33c47fc6.jpg",
+  },
+  {
+    id: 871,
+    lg: "/15204918e0b8c871.jpg",
+    mb: "/26811cbd61abe03f.jpg",
   },
 ];

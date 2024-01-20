@@ -1,4 +1,5 @@
-import { Profile, setProfile } from "@/db/User";
+import { setProfile } from "@/db/User";
+import { Profile } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {

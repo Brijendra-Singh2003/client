@@ -49,3 +49,12 @@ type User = {
     name: string | null;
     role: string;
 }
+
+type mySession = {
+    user?: {
+        id?: string;
+        name?: string;
+        image?: string;
+        email?: string;
+    };
+} | null;

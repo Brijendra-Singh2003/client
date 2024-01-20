@@ -8,7 +8,7 @@ export default function Form({
   userId,
 }: {
   profile: formData;
-  userId: number;
+  userId: string;
 }) {
   const [disableSubmit, setDisableSubmit] = useState(false);
   const [enableEdit, setenableEdit] = useState(!profile);
@@ -102,7 +102,7 @@ export default function Form({
               name="gender"
               type="radio"
               value="male"
-              defaultChecked={profile?.gender === "male"}
+              defaultChecked={currProfile?.gender === "male"}
               onChange={handleChange}
             />
             Male
@@ -112,7 +112,7 @@ export default function Form({
               name="gender"
               type="radio"
               value="female"
-              defaultChecked={profile?.gender === "female"}
+              defaultChecked={currProfile?.gender === "female"}
               onChange={handleChange}
             />
             Female
@@ -121,7 +121,7 @@ export default function Form({
       </div>
       <div className="col-span-2 flex justify-end gap-4">
         <button
-          className="py-1.5 w-24 focus:scale-95 disabled:cursor-not-allowed transition-all hover:bg-teal-700 rounded-md bg-teal-600 disabled:opacity-40"
+          className="py-1.5 w-24 focus:scale-95 disabled:cursor-not-allowed transition-all hover:bg-blue-700 rounded-md bg-blue-600 text-white disabled:opacity-40"
           disabled={disableSubmit}
         >
           Save
@@ -129,7 +129,7 @@ export default function Form({
 
         <button
           type="button"
-          className="py-1.5 w-24 focus:scale-95 disabled:cursor-not-allowed transition-all hover:bg-teal-700 rounded-md border border-teal-600"
+          className="py-1.5 w-24 focus:scale-95 disabled:cursor-not-allowed transition-all hover:bg-blue-700 rounded-md border border-blue-600 hover:text-white"
           onClick={() => setenableEdit(false)}
         >
           Cancel
@@ -159,7 +159,7 @@ export default function Form({
       </div>
 
       <button
-        className="col-span-2 py-1.5 focus:scale-95 disabled:cursor-not-allowed transition-all hover:bg-teal-700 px-8 rounded-md ml-auto mt-4 bg-teal-600 w-fit disabled:opacity-40"
+        className="col-span-2 py-1.5 focus:scale-95 disabled:cursor-not-allowed transition-all hover:bg-blue-700 px-8 rounded-md ml-auto mt-4 bg-blue-600 text-white w-fit disabled:opacity-40"
         onClick={() => setenableEdit(true)}
       >
         Edit

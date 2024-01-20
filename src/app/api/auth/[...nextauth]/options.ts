@@ -10,14 +10,16 @@ export const options: NextAuthOptions = {
         }),
     ],
     callbacks: {
-        async signIn({ account, profile }: any) {
-            if (account.provider === "google") {
-                await AddUser({ name: profile.name, email: profile.email });
+        async signIn({ account, profile, user }: any) {
+            if (account?.provider === "google") {
+                // console.log(user, " logged in");
+                await AddUser(user);
                 return profile.email_verified;
             }
             return false;
         },
-        async session({ session }) {
+        async session({ session, token }: any) {
+            session.user.id = token.sub;
             return session;
         }
     }

@@ -3,44 +3,44 @@ import { AiFillStar } from "react-icons/ai";
 
 export default async function page() {
   return (
-    <main className="product-main bg-gray-800 md:grid grid-cols-3">
+    <main className="product-main md:grid grid-cols-3 gap-4">
       <div className="md:sticky top-16 col-span-1 h-64 md:h-96" />
-      <div className="bg-gray-900 col-span-2 flex flex-col gap-2">
+      <div className="bg-white col-span-2 flex flex-col gap-2">
         <h1 className="font-bold px-4 pt-4 w-full ">
-          <div className="h-4 w-full bg-gray-600 rounded animate-pulse"></div>
+          <div className="h-4 w-full bg-gray-200 rounded animate-pulse"></div>
         </h1>
-        <div className="h-4 ml-4 w-10 bg-gray-600 rounded animate-pulse"></div>
+        <div className="h-4 ml-4 w-10 bg-gray-200 rounded animate-pulse"></div>
         <p className="flex ml-4 gap-4 items-center">
-          <div className="h-6 w-32 bg-gray-600 rounded animate-pulse"></div>
+          <div className="h-6 w-32 bg-gray-200 rounded animate-pulse"></div>
         </p>
 
         <div className="mt-6 px-4 items-center">
           <p className="text-gray-600 font-bold mb-1 dark:text-gray-100">
-            <div className="h-8 w-32 bg-gray-600 rounded animate-pulse"></div>
+            <div className="h-8 w-32 bg-gray-200 rounded animate-pulse"></div>
           </p>
           <ul className="text-gray-600 dark:text-gray-400">
             <li className="flex items-center p-1 leading-relaxed text-xs md:text-[14px]">
               <TagIcon />
               <span className="w-[240px] md:w-full">
-                <div className="h-4 w-full bg-gray-600 rounded animate-pulse"></div>
+                <div className="h-4 w-full bg-gray-200 rounded animate-pulse"></div>
               </span>
             </li>
             <li className="flex items-center p-1 leading-relaxed text-xs md:text-[14px]">
               <TagIcon />
               <span className="w-[240px] md:w-full">
-                <div className="h-4 w-full bg-gray-600 rounded animate-pulse"></div>
+                <div className="h-4 w-full bg-gray-200 rounded animate-pulse"></div>
               </span>
             </li>
             <li className="flex items-center p-1 leading-relaxed text-xs md:text-[14px]">
               <TagIcon />
               <span className="w-[240px] md:w-full">
-                <div className="h-4 w-full bg-gray-600 rounded animate-pulse"></div>
+                <div className="h-4 w-full bg-gray-200 rounded animate-pulse"></div>
               </span>
             </li>
             <li className="flex items-center p-1 leading-relaxed text-xs md:text-[14px]">
               <TagIcon />
               <span className="w-[240px] md:w-full">
-                <div className="h-4 w-full bg-gray-600 rounded animate-pulse"></div>
+                <div className="h-4 w-full bg-gray-200 rounded animate-pulse"></div>
               </span>
             </li>
           </ul>
@@ -48,39 +48,39 @@ export default async function page() {
 
         <div className="p-4">
           <h2 className="text-gray-600 font-bold mb-1 dark:text-gray-100">
-            <div className="h-8 w-32 bg-gray-600 rounded animate-pulse"></div>
+            <div className="h-8 w-32 bg-gray-200 rounded animate-pulse"></div>
           </h2>
           <ul className="max-w-md px-4 py-2 list-disc text-gray-400">
             <li>
-              <div className="h-4 w-full bg-gray-600 rounded animate-pulse"></div>
+              <div className="h-4 w-full bg-gray-200 rounded animate-pulse"></div>
             </li>
             <li>
-              <div className="h-4 w-full bg-gray-600 rounded animate-pulse"></div>
+              <div className="h-4 w-full bg-gray-200 rounded animate-pulse"></div>
             </li>
             <li>
-              <div className="h-4 w-full bg-gray-600 rounded animate-pulse"></div>
+              <div className="h-4 w-full bg-gray-200 rounded animate-pulse"></div>
             </li>
             <li>
-              <div className="h-4 w-full bg-gray-600 rounded animate-pulse"></div>
+              <div className="h-4 w-full bg-gray-200 rounded animate-pulse"></div>
             </li>
           </ul>
         </div>
 
         <div className="p-4">
           <h2 className="text-gray-600  font-bold py-2 dark:text-gray-100">
-            <div className="h-8 w-36 bg-gray-600 rounded animate-pulse"></div>
+            <div className="h-8 w-36 bg-gray-200 rounded animate-pulse"></div>
           </h2>
-          <div className="h-4 my-2 w-full bg-gray-600 rounded animate-pulse"></div>
-          <div className="h-4 my-2 w-full bg-gray-600 rounded animate-pulse"></div>
-          <div className="h-4 my-2 w-full bg-gray-600 rounded animate-pulse"></div>
-          <div className="h-4 my-2 w-full bg-gray-600 rounded animate-pulse"></div>
+          <div className="h-4 my-2 w-full bg-gray-200 rounded animate-pulse"></div>
+          <div className="h-4 my-2 w-full bg-gray-200 rounded animate-pulse"></div>
+          <div className="h-4 my-2 w-full bg-gray-200 rounded animate-pulse"></div>
+          <div className="h-4 my-2 w-full bg-gray-200 rounded animate-pulse"></div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 p-4 sticky bottom-0 bg-gray-900">
-          <button className="bg-teal-600 opacity-50 p-3 text-xl rounded-xl">
+        <div className="grid grid-cols-2 gap-4 p-4 sticky bottom-0 bg-white">
+          <button className="bg-blue-600 opacity-50 p-3 text-xl rounded-xl">
             Add To Cart
           </button>
-          <button className="bg-teal-600 opacity-50 p-3 text-xl rounded-xl">
+          <button className="bg-blue-600 opacity-50 p-3 text-xl rounded-xl">
             Buy Now
           </button>
         </div>
@@ -93,7 +93,7 @@ const TagIcon: FC = () => (
   <svg
     stroke="currentColor"
     fill="currentColor"
-    stroke-width="0"
+    strokeWidth="0"
     viewBox="0 0 24 24"
     className="text-green-500 mr-2"
     height="1em"
