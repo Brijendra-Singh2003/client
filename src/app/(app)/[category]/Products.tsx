@@ -28,7 +28,6 @@ export default function Products({ category }: ProductsProps) {
       .then((data) => {
         setItems(data);
         setLoading(false);
-        // window.scrollTo(0, 0);
       });
   }, [page]);
 

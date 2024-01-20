@@ -14,7 +14,6 @@ export type formData = {
 
 export default async function Page() {
   const session = (await getServerSession(options)) as mySession;
-  console.log("server session: ", session);
   let profile: formData = {
     firstName: "",
     lastName: "",
@@ -23,7 +22,6 @@ export default async function Page() {
 
   if (session && session.user?.id) {
     profile = (await getProfile(session.user.id)) as formData;
-    console.log("user profile: ", profile, session.user);
   } else {
     redirect("/api/auth/signin");
   }
