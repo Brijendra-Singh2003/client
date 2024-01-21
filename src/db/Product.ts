@@ -1,6 +1,4 @@
-import { Prisma } from "@prisma/client";
 import { prisma } from "./demo";
-import { DefaultArgs } from "@prisma/client/runtime/library";
 
 export type category = "topwear" | "bottomwear" | "footwear" | "hoodie" | "mousepad" | "mug" | "cap";
 
@@ -52,22 +50,32 @@ export async function getProductById(id: number) {
     }
 }
 
-export async function getProductBySearch(searchString: string, lastId: number) {
+export async function getProductBySearch(searchString: string, page: number, category?: category) {
     try {
         const product = await prisma.product.findMany({
-            take: 5,
-            cursor: lastId ? {
-                id: lastId
-            } : undefined,
+            take: 4,
+            skip: page * 4,
             where: {
                 name: {
                     contains: searchString,
+                    mode: "insensitive"
                 },
+                category: {
+                    name: category
+                }
             },
             orderBy: {
-                id: 'asc',
+                id: "desc",
             },
-        })
+            select: {
+                id: true,
+                name: true,
+                price: true,
+                discount: true,
+                imageUrl: true,
+            }
+        });
+        console.log(product);
         return product;
     } catch (error: any) {
         console.log("error occured while getting product by id: ", error.message);

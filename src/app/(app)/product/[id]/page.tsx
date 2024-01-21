@@ -1,4 +1,5 @@
 import { options } from "@/app/api/auth/[...nextauth]/options";
+import AddToCartBtn from "@/components/btns/AddToCart";
 // import Collection from "@/components/collection";
 import { getProductById } from "@/db/Product";
 import { addItemToCart } from "@/db/User";
@@ -12,15 +13,6 @@ import { AiFillStar } from "react-icons/ai";
 export default async function page({ params }: prop) {
   const session = (await getServerSession(options)) as mySession;
   const item = (await getProductById(+params.id)) as Product;
-
-  async function action() {
-    "use server";
-    if (session?.user?.id && item?.id) {
-      addItemToCart(item.id, session.user?.id);
-    } else {
-      redirect("/api/auth/signin");
-    }
-  }
 
   return (
     <>
@@ -110,29 +102,12 @@ export default async function page({ params }: prop) {
             <p className=" px-4 list-disc text-gray-400">{item.description}</p>
           </div>
 
-          <AddToCartBtn handleClick={action} />
+          <AddToCartBtn session={session} item={item} />
         </div>
       </main>
 
       {/* <Collection collection={recommends} /> */}
     </>
-  );
-}
-
-function AddToCartBtn({ handleClick }: { handleClick: () => {} }) {
-  "use client";
-  return (
-    <form
-      action={handleClick}
-      className="grid grid-cols-2 gap-4 p-4 sticky bottom-0 bg-white"
-    >
-      <button className="bg-blue-600 text-white p-3 active:scale-95 text-xl rounded-xl">
-        Add To Cart
-      </button>
-      <button className="bg-blue-600 text-white p-3 text-xl rounded-xl">
-        Buy Now
-      </button>
-    </form>
   );
 }
 

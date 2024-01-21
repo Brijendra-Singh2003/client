@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { cartState, useCartStore } from "@/context/UserContext";
-import { AiOutlineShoppingCart, AiOutlineLogout } from "react-icons/ai";
+import { AiOutlineShoppingCart } from "react-icons/ai";
 
 export default function SigninBtn({
   session,

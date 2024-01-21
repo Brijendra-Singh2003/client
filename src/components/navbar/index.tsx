@@ -8,14 +8,14 @@ import { getUser } from "@/db/User";
 
 const Navbar = async ({ session }: { session: Session | null }) => {
   let count = 0;
-  // if (session?.user?.email) {
-  //   const user: any = await getUser(session.user?.email, {
-  //     cart: {
-  //       select: { id: true },
-  //     },
-  //   });
-  //   count = user?.cart?.length || 0;
-  // }
+  if (session?.user?.email) {
+    const user: any = await getUser(session.user?.email, {
+      cart: {
+        select: { id: true },
+      },
+    });
+    count = user?.cart?.length || 0;
+  }
   return (
     <div className="pt-4 pb-2 px-4 lg:px-[10%] bg-blue-600 text-white flex flex-wrap w-full z-10 gap-4 justify-between sticky -top-16 sm:-top-2">
       <Link href="/" className="text-3xl font-bold">
@@ -24,13 +24,13 @@ const Navbar = async ({ session }: { session: Session | null }) => {
 
       {/* search bar */}
       <form
-        action={handleSearch}
+        action="/search"
         className="hidden sm:flex w-fit flex-grow-[0.5] gap-4 bg-white text-black rounded-lg px-2 focus-within:outline focus-within:outline-1 focus-within:shadow-lg"
       >
         <input
           className="bg-transparent w-full outline-none px-2"
           type="text"
-          name="search-product"
+          name="q"
           required
           autoComplete="kcvluyc"
           placeholder="search products..."
