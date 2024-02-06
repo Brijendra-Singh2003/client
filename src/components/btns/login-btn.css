@@ -1,0 +1,35 @@
+.open {
+    animation: open 150ms ease-in-out forwards;
+}
+
+@keyframes open {
+    from {
+        top: -8px;
+        right: -70px;
+        scale: 0;
+    }
+
+    to {
+        top: 64px;
+        right: 0;
+        scale: 1;
+    }
+}
+
+.close {
+    animation: close 150ms ease-in-out forwards;
+}
+
+@keyframes close {
+    to {
+        top: -8px;
+        right: -70px;
+        scale: 0;
+    }
+
+    from {
+        top: 64px;
+        right: 0;
+        scale: initial;
+    }
+}

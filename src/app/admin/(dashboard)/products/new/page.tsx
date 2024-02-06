@@ -1,40 +1,24 @@
 "use client";
 
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Compress from "compress.js";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 const compress = new Compress();
 
-export default function Page(props: { params: { id: string } }) {
-  const [prevProduct, setPrevProduct] = useState<Product | null>(null);
+export default function Page() {
+  const prevProduct = defaultProduct;
   const [product, setProduct] = useState<formData>(defaultData);
   const [base64, setBase64] = useState<string>("");
-
-  useEffect(() => {
-    // TODO: fetct product details from server
-    fetch(
-      process.env.NEXT_PUBLIC_SERVER_URL + "/api/products/" + props.params.id
-    )
-      .then((res) => res.json())
-      .then((data: Product) => {
-        setPrevProduct(data);
-        setProduct({
-          name: data.name,
-          stock: data.stock,
-          price: data.price,
-          discount: data.discount,
-          id: data.id,
-          category: data.categoryId || 0,
-          description: data.description,
-        });
-      })
-      .catch((err) => console.log(err));
-  }, [props.params.id]);
+  const [loading, setloading] = useState<boolean>(false);
+  const router = useRouter();
 
   function CompressAndAdd(file: File) {
     compress
       .compress([file], compressOptions)
       .then(([{ data, ext }]) => {
+        console.log(data);
         setBase64(data);
         setProduct((prev) => {
           return { ...prev, image: Compress.convertBase64ToFile(data, ext) };
@@ -48,15 +32,10 @@ export default function Page(props: { params: { id: string } }) {
     CompressAndAdd(file?.item(0) as File);
   }
 
-  function handleChange(e: any) {
-    setProduct((prev: any) => {
-      return { ...prev, [e.target.name]: e.target.value.toLowerCase() };
-    });
-  }
-
   function handleDrop(e: React.DragEvent<HTMLLabelElement>) {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
+    console.log(file);
     const fileType = file.type.split("/")[0];
     if (fileType === "image") {
       CompressAndAdd(file);
@@ -65,7 +44,9 @@ export default function Page(props: { params: { id: string } }) {
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setloading(true);
     console.log(product);
+
     const formData = new FormData(e.target as HTMLFormElement);
     formData.append("image", base64);
 
@@ -74,11 +55,23 @@ export default function Page(props: { params: { id: string } }) {
       body: formData,
       credentials: "include",
     })
-      .then((r) => r.text())
-      .then((d) => console.log(d))
-      .catch((e) => console.log(e));
-
-    // setProduct(defaultData);
+      .then((r) => r.json())
+      .then((d) => {
+        console.log(d);
+        setloading(false);
+        if (d.id) {
+          toast.success("Item Added To Cart");
+        } else {
+          toast.error("failed to add item");
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        toast.error("failed to add item");
+      })
+      .finally(() => {
+        router.push("/admin/products");
+      });
   }
 
   return (
@@ -99,7 +92,7 @@ export default function Page(props: { params: { id: string } }) {
             src={
               product?.image
                 ? URL.createObjectURL(product.image)
-                : prevProduct?.imageUrl || "/assets/default-avatar.png"
+                : prevProduct.photo
             }
             height={254}
             width={254}
@@ -127,8 +120,6 @@ export default function Page(props: { params: { id: string } }) {
               placeholder="name"
               name="name"
               id="product-name-input"
-              onChange={handleChange}
-              value={product?.name}
             />
           </div>
           <div className="w-full flex flex-col md:grid grid-cols-2 md:items-center">
@@ -157,8 +148,6 @@ export default function Page(props: { params: { id: string } }) {
               placeholder="price"
               name="price"
               id="product-price-input"
-              onChange={handleChange}
-              value={product?.price}
             />
           </div>
           <div className="w-full flex flex-col md:grid grid-cols-2 md:items-center">
@@ -171,8 +160,6 @@ export default function Page(props: { params: { id: string } }) {
               placeholder="discount"
               name="discount"
               id="product-discount-input"
-              onChange={handleChange}
-              value={product?.discount}
             />
           </div>
           <div className="w-full flex flex-col md:grid grid-cols-2 md:items-center">
@@ -185,8 +172,6 @@ export default function Page(props: { params: { id: string } }) {
               placeholder="stock"
               name="stock"
               id="product-stock-input"
-              onChange={handleChange}
-              value={product?.stock}
             />
           </div>
           <div className="w-full flex flex-col md:grid grid-cols-2 md:items-center">
@@ -197,32 +182,23 @@ export default function Page(props: { params: { id: string } }) {
               placeholder="discription"
               name="discription"
               id="product-discription-input"
-              onChange={handleChange}
               maxLength={511}
-              value={product?.description}
             />
           </div>
           <div className="grid grid-cols-2 gap-4 mt-4">
             <button
               type="submit"
-              className="bg-blue-600 active:scale-95 transition-all p-3 rounded-lg text-white"
+              disabled={loading}
+              className="bg-blue-600 disabled:opacity-40 disabled:cursor-not-allowed active:scale-95 transition-all p-3 rounded-lg text-white"
             >
-              {props.params.id === "new" ? "ADD" : "UPDATE"}
+              ADD
             </button>
             <button
               id="product-cancel-button"
               type="button"
-              onClick={() =>
-                setProduct({
-                  name: prevProduct?.name || "",
-                  stock: prevProduct?.stock || 0,
-                  price: prevProduct?.price || 0,
-                  discount: prevProduct?.discount || 0,
-                  description: prevProduct?.description || "",
-                  category: prevProduct?.categoryId || 0,
-                })
-              }
-              className="border-blue-600 border-2 p-3 rounded-lg active:scale-95 transition-all"
+              disabled={loading}
+              onClick={() => router.back()}
+              className="border-blue-600 disabled:opacity-40 disabled:cursor-not-allowed border-2 p-3 rounded-lg active:scale-95 transition-all"
             >
               CANCEL
             </button>
@@ -234,14 +210,14 @@ export default function Page(props: { params: { id: string } }) {
 }
 
 type formData = {
-  id?: number;
+  id?: string;
   name: string;
   image?: File;
   stock: number;
   price: number;
   discount: number;
-  category: number;
-  description: string;
+  category: string;
+  discription: string;
 };
 
 const compressOptions = {
@@ -253,11 +229,22 @@ const compressOptions = {
 };
 
 const defaultData: formData = {
-  id: 0,
+  id: "",
   name: "",
   stock: 0,
   price: 0,
   discount: 0,
-  category: 0,
-  description: "",
+  category: "",
+  discription: "",
+};
+
+const defaultProduct: product = {
+  id: "",
+  name: "",
+  photo: "/assets/default-avatar.png",
+  stock: 0,
+  price: 0,
+  discount: 0,
+  category: "topwear",
+  discription: "",
 };

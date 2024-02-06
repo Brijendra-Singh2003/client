@@ -7,10 +7,10 @@ import TableHOC from "./Table";
 import Link from "next/link";
 import { BsPencilFill } from "react-icons/bs";
 
-const columnHelper: ColumnHelper<product> = createColumnHelper();
+const columnHelper: ColumnHelper<Product> = createColumnHelper();
 
 const columns = [
-  columnHelper.accessor("photo", {
+  columnHelper.accessor("imageUrl", {
     header: "Picture",
     cell: (props) => (
       <Image
@@ -43,6 +43,6 @@ const columns = [
   }),
 ];
 
-export default function ProductsTable({ data }: { data: product[] }) {
+export default function ProductsTable({ data }: { data: Product[] }) {
   return <TableHOC columns={columns} data={data} className="w-full" />;
 }

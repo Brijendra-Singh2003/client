@@ -30,9 +30,9 @@ ChartJS.register(
   Filler
 );
 
-ChartJS.defaults.color = "#ffffff";
+ChartJS.defaults.color = "#000000";
 
-const months = ["January", "February", "March", "April", "May", "June", "July"];
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "jul"];
 
 interface BarChartProps {
   className?: string;
@@ -57,7 +57,6 @@ export const BarChart = ({
   horizontal = false,
   labels = months,
 }: BarChartProps) => {
-  "use client";
   const options: ChartOptions<"bar"> = {
     responsive: true,
     indexAxis: horizontal ? "y" : "x",
@@ -134,7 +133,6 @@ export const DoughnutChart = ({
   legends = true,
   offset,
 }: DoughnutChartProps) => {
-  "use client";
   const doughnutData: ChartData<"doughnut", number[], string> = {
     labels,
     datasets: [

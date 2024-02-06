@@ -1,5 +1,4 @@
 import React, { FC } from "react";
-import { AiFillStar } from "react-icons/ai";
 
 export default async function page() {
   return (

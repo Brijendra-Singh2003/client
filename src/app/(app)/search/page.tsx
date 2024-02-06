@@ -1,5 +1,5 @@
 import Filters from "@/components/filter";
-import { category, getProductBySearch } from "@/db/Product";
+// import { category, getProductBySearch } from "@/db/Product";
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -25,19 +25,26 @@ export default async function page({
   searchParams: { page, q, category },
 }: prop) {
   const currPage = page ? Number.parseInt(page) : 0;
-  const products: Product[] = await getProductBySearch(
-    q as string,
-    currPage,
-    category
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/products/search?q=${q}&page=${page}` +
+      (category ? "&category=" + category : ""),
+    { cache: "no-store" }
   );
+  const products: Product[] = await res.json();
+  console.log(products);
+  // await getProductBySearch(
+  //   q as string,
+  //   currPage,
+  //   category
+  // );
   return (
     <main className="lg:grid grid-cols-5 gap-4 flex">
       <Filters q={q} category={category} />
       <div className="col-span-4 bg-white">
         <h1 className="px-4 pt-4 capitalize text-2xl lg:text-3xl w-fit">{q}</h1>
-        <div className="grid grid-cols-2 gap-1 p-1 sm:p-4 sm:grid-cols-3 lg:grid-cols-4">
-          {products?.map((item: Product) => {
-            return (
+        <div className="grid grid-cols-2 gap-1 p-1 sm:p-4 sm:grid-cols-4 w-full">
+          {products?.length > 0 ? (
+            products?.map((item) => (
               <Link
                 href={`/product/${item.id}`}
                 key={item.id}
@@ -47,7 +54,7 @@ export default async function page({
                   height={200}
                   width={200}
                   src={item.imageUrl}
-                  alt=""
+                  alt="product image"
                   className="w-full aspect-[3/4] object-cover mx-auto"
                 />
                 <div className="col-span-1 px-2 flex flex-col gap-1">
@@ -69,8 +76,10 @@ export default async function page({
                   </p>
                 </div>
               </Link>
-            );
-          })}
+            ))
+          ) : (
+            <div className="col-span-2 h-48 sm:col-span-4 ">faltu content</div>
+          )}
         </div>
         <div className="w-full p-4 flex justify-center items-center gap-4">
           {currPage <= 0 ? (

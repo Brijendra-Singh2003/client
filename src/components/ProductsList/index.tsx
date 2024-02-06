@@ -1,7 +1,5 @@
 "use client";
 
-import { category } from "@/db/Product";
-import { Product } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -29,7 +27,7 @@ export default function Products({ category }: ProductsProps) {
         setItems(data);
         setLoading(false);
       });
-  }, [page]);
+  }, [page, category]);
 
   return (
     <>

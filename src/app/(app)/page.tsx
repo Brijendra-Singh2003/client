@@ -1,6 +1,6 @@
 import Collection, { CollectionSkeleton } from "@/components/collection";
 import App from "@/components/swiper";
-import { category } from "@/db/Product";
+// import { category } from "@/db/Product";
 import { headers } from "next/headers";
 import { Suspense } from "react";
 

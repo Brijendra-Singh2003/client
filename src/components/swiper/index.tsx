@@ -43,7 +43,7 @@ export default function App({
         }}
       >
         {items.map((item) => (
-          <SwiperSlide key={item.id}>
+          <SwiperSlide key={item.mb}>
             <Image
               className="object-cover"
               height={270}

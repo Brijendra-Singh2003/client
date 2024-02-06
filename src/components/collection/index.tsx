@@ -1,4 +1,4 @@
-import { category, getProductsByCategory } from "@/db/Product";
+// import { category, getProductsByCategory } from "@/db/Product";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -6,42 +6,46 @@ import { AiFillStar } from "react-icons/ai";
 import { FaChevronRight } from "react-icons/fa6";
 
 export default async function Collection({ category }: { category: category }) {
-  const items = await getProductsByCategory(category);
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/products?category=${category}`
+  );
+  // console.log(await res.text());
+  const items: any[] = await res.json();
 
   return (
-    <section className="flex flex-col w-full my-4 shadow-md bg-white z-8">
+    <section className="flex mt-1 flex-col w-full sm:my-4 shadow-md bg-white z-8">
       <Link
         href={"/" + category}
-        className="pt-2 px-4 md:py-4 capitalize sm:text-3xl text-lg relative flex justify-between"
+        className="pt-4 px-4 pb-2 capitalize sm:text-3xl text-xl relative flex justify-between"
       >
         <h2>{category}</h2>
         <span className="text-black p-1">
           <FaChevronRight />
         </span>
       </Link>
-      <div className="flex gap-4 relative overflow-x-scroll z-9 overflow-y-clip h-fit">
+      <div className="flex sm:gap-2 gap-1 p-2 relative overflow-x-scroll z-9 overflow-y-clip h-fit">
         {items.map((item) => {
           return (
             <Link
               key={item.id}
               href={"/product/" + item.id}
-              className="rounded relative transition-all p-2"
+              className="rounded relative transition-all py-2"
             >
               <Image
                 height={200}
                 width={200}
                 src={item.imageUrl}
                 alt={item.name + " image"}
-                className="h-36 md:h-48 lg:h-64 w-full object-cover"
+                className="h-36 md:h-48 lg:h-64 object-cover mx-auto"
               />
-              <h3 className="w-32 lg:w-52 text-xs md:text-sm text-nowrap overflow-hidden text-ellipsis py-1">
+              <h3 className="w-32 px-2 lg:w-52 text-xs md:text-sm text-nowrap overflow-hidden text-ellipsis py-1">
                 {item.name}
               </h3>
-              <h5 className="w-fit flex gap-1 px-1 rounded text-xs bg-green-600 text-white items-center">
+              <h5 className="w-fit ml-2 flex gap-1 px-1 rounded text-xs bg-green-600 text-white items-center">
                 4.2
                 <AiFillStar />
               </h5>
-              <p className="flex flex-wrap gap-2">
+              <p className="flex px-2 flex-wrap gap-2">
                 <b className="text-lg">₹{item.price - item.discount}</b>{" "}
                 <span className="text-gray-400 line-through">{item.price}</span>{" "}
                 <span className=" text-green-500 text-nowrap text-xs">
@@ -51,7 +55,7 @@ export default async function Collection({ category }: { category: category }) {
             </Link>
           );
         })}
-        <div className="flex items-center justify-center p-4">
+        {/* <div className="flex items-center justify-center p-4">
           <Link
             href={"/" + category}
             className={
@@ -60,7 +64,7 @@ export default async function Collection({ category }: { category: category }) {
           >
             <h3>{"->"}</h3>
           </Link>
-        </div>
+        </div> */}
       </div>
     </section>
   );

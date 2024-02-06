@@ -32,13 +32,14 @@ export default function Form({
   async function handleSubmit(e: any) {
     e.preventDefault();
     setDisableSubmit(true);
-    console.log(currProfile);
-    const res = await fetch(location.origin + "/api/profile", {
+    // console.log(currProfile);
+    const res = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + "/api/user/", {
       method: "POST",
-      headers: { "Content-Type": "application.json" },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(currProfile),
     });
-    console.log("updated data: ", await res.json());
+    // console.log("updated data: ", await res.json());
+    setCurrProfile(await res.json());
     setDisableSubmit(false);
     setenableEdit(false);
   }

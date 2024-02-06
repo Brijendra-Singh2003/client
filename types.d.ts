@@ -1,9 +1,12 @@
 type product = {
-    id: string,
+    id?: string,
     name: string,
     photo: string,
     stock: number,
-    price: number
+    price: number,
+    discount: number,
+    discription: string,
+    category: category
 }
 
 type customer = {
@@ -51,10 +54,25 @@ type User = {
 }
 
 type mySession = {
-    user?: {
-        id?: string;
-        name?: string;
-        image?: string;
-        email?: string;
-    };
+    id: string,
+    name: string,
+    email: string
 } | null;
+
+type category = "topwear" | "bottomwear" | "footwear" | "hoodie" | "mousepad" | "mug" | "cap";
+
+type Product = {
+    id: number;
+    name: string;
+    description: string;
+    price: number;
+    discount: number;
+    imageUrl: string;
+    stock: number;
+    createdAt: Date;
+    updatedAt: Date;
+    brandId: number | null;
+    categoryId: number | null;
+    userId: string;
+    imageId: string;
+}

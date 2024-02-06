@@ -3,7 +3,7 @@ import data from "./data";
 
 export default async function Page() {
   return (
-    <div className="bg-gray-900 p-4 h-screen overflow-y-auto pb-14 ">
+    <div className="bg-white p-4 h-screen overflow-y-auto pb-14 ">
       <div className="flex justify-between items-center h-16 p-4">
         <h1 className="text-xl font-bold ml-4">Customers</h1>
       </div>

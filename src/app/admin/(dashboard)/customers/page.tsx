@@ -3,7 +3,7 @@ import CustomerTable from "@/components/admin/CustomerTable";
 
 export default async function Page() {
   return (
-    <div className="bg-gray-900 h-screen overflow-y-auto pb-14 p-4">
+    <div className="bg-white rounded-md h-screen overflow-y-auto pb-14 p-4">
       <div className="flex justify-between items-center h-16 p-4">
         <h1 className="text-xl font-bold ml-4">Customers</h1>
       </div>

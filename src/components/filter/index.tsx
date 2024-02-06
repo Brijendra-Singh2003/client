@@ -1,4 +1,3 @@
-import { category } from "@/db/Product";
 import React from "react";
 
 export default function Filters({
@@ -44,6 +43,7 @@ function Filter({
             <input
               type="radio"
               value={option}
+              readOnly
               defaultChecked={category === option}
               name={title}
               id={option}
