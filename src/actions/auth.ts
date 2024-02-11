@@ -1,13 +1,7 @@
 import { headers } from "next/headers";
 
-export function getServerSession() {
-    return fetch(process.env.NEXT_PUBLIC_SERVER_URL + "/api/auth/user", {
+export async function getServerSession() {
+    return await (await fetch(process.env.NEXT_PUBLIC_SERVER_URL + "/api/auth/user", {
         headers: headers(),
-        cache: "no-store",
-    })
-        .then((data) => data.json())
-        .catch((err) => {
-            console.log(err);
-            return {};
-        });
+    })).json();
 }
