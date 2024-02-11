@@ -15,6 +15,7 @@ const Navbar = async ({ session }: { session: mySession }) => {
         next: {
           tags: ["cart"],
         },
+        cache: "no-store",
       }
     );
     count = await res.text();
