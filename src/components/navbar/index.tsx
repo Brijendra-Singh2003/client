@@ -21,10 +21,7 @@ const Navbar = async ({ session }: { session: mySession }) => {
     count = await res.text();
   }
   return (
-    <Nav
-      top="-56px"
-      className="bg-blue-600 w-full sticky transition-all shadow z-10"
-    >
+    <nav className="bg-blue-600 w-full sticky -top-14 transition-all shadow z-10">
       <div className="py-2 px-4 text-white max-w-6xl mx-auto flex flex-wrap w-full z-10 gap-4 justify-between">
         <Link href="/" className="text-3xl font-bold">
           Logo.
@@ -109,7 +106,7 @@ const Navbar = async ({ session }: { session: mySession }) => {
           </li>
         </ul>
       </div>
-    </Nav>
+    </nav>
   );
 };
 

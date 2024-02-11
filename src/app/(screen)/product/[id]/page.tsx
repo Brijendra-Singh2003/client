@@ -6,10 +6,14 @@ import { AiFillStar } from "react-icons/ai";
 
 export default async function page({ params }: prop) {
   const session = (await getServerSession()) as mySession;
-  const res = await fetch(
+  const item: Product = await fetch(
     process.env.NEXT_PUBLIC_SERVER_URL + "/api/products/" + params.id
-  );
-  const item = await res.json();
+  )
+    .then((data) => data.json())
+    .catch((err) => {
+      console.log(err);
+      return {};
+    });
 
   return (
     <main className="product-main sm:bg-white py-4 md:px-4 flex flex-col gap-4 items-center sm:items-start sm:min-w-96 sm:grid grid-cols-3">
