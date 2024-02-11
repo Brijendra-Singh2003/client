@@ -1,9 +1,10 @@
 import Link from "next/link";
 import React, { FormHTMLAttributes } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
-import SigninBtn from "@/components/btns/login-btn";
+import MyAccount from "@/components/btns/Account";
 import { headers } from "next/headers";
 import Nav from "./Nav";
+import SignInBtn from "../btns/SignInBtn";
 
 const Navbar = async ({ session }: { session: mySession }) => {
   let count = "0";
@@ -30,18 +31,7 @@ const Navbar = async ({ session }: { session: mySession }) => {
         <SearchBox className="hidden sm:flex w-fit flex-grow-[0.5] gap-4 bg-white text-black rounded-lg px-2 focus-within:outline focus-within:outline-1 focus-within:shadow-lg" />
 
         <div className="flex gap-6 relative">
-          {session?.id ? (
-            <SigninBtn count={count} />
-          ) : (
-            <Link
-              className="px-3 py-2 text-black bg-white active:scale-95 transition-all rounded-lg"
-              href={
-                process.env.NEXT_PUBLIC_SERVER_URL + "/api/auth/signin/google"
-              }
-            >
-              Sign In
-            </Link>
-          )}
+          {session?.id ? <MyAccount count={count} /> : <SignInBtn />}
         </div>
 
         <SearchBox className="flex sm:hidden text-black w-full h-10 focus-within:shadow flex-grow-[0.5] gap-4 bg-white px-2" />

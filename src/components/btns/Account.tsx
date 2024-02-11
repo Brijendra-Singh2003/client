@@ -2,14 +2,14 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { cartState, useCartStore } from "@/context/UserContext";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 
 import "./login-btn.css";
 
-export default function SigninBtn({ count }: { count: string }) {
+export default function Account({ count }: { count: string }) {
   const [isOpen, setIsOpen] = useState("scale-0");
   const { setCartSize, cartSize } = useCartStore((state) => state) as cartState;
   const router = useRouter();
@@ -21,12 +21,6 @@ export default function SigninBtn({ count }: { count: string }) {
   const open = () => setIsOpen("open");
   const close = () => setIsOpen("close");
 
-  async function signOut() {
-    await fetch(process.env.NEXT_PUBLIC_SERVER_URL + "/api/auth/signout", {
-      credentials: "include",
-    });
-    router.refresh();
-  }
   return (
     <>
       <Link
@@ -70,12 +64,12 @@ export default function SigninBtn({ count }: { count: string }) {
         >
           My Dashbord
         </Link>
-        <button
-          onClick={signOut}
+        <Link
+          href={process.env.NEXT_PUBLIC_SERVER_URL + "/api/auth/signout"}
           className="px-4 py-2 text-left text-red-600 hover:bg-zinc-100 transition-all"
         >
           Logout
-        </button>
+        </Link>
       </div>
     </>
   );
