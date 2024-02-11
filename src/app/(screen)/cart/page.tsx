@@ -22,26 +22,37 @@ const product: Product[] = [
 ];
 
 export default async function page() {
-  const products = await (
-    await fetch(process.env.NEXT_PUBLIC_SERVER_URL + "/api/cart", {
-      headers: headers(),
-      next: {
-        tags: ["cart"],
-      },
-    })
-  ).json();
+  let products = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + "/api/cart", {
+    headers: headers(),
+    next: {
+      tags: ["cart"],
+    },
+  })
+    .then((data) => data.json())
+    .catch((err) => {
+      console.log(err);
+      return [];
+    });
+
   products.reverse();
   // console.log("products: ", products);
+
   let price = 0;
   let discount = 0;
+
+  products =
+    products.length > 0
+      ? products.map(({ id, product }: any) => {
+          price += product.price as number;
+          discount += product.discount as number;
+          return <CartItem id={id} product={product} key={product.id} />;
+        })
+      : "";
+
   return (
     <main className="w-full lg:grid grid-cols-3 gap-4 p-4 mx-auto max-w-6xl">
       <div className="w-full col-span-2 rounded-md flex flex-col gap-4 mb-4">
-        {products.map((item: any) => {
-          price += item.product.price as number;
-          discount += item.product.discount as number;
-          return <CartItem {...item} key={item.product.id} />;
-        })}
+        {products}
       </div>
       <div className="bg-white p-4 flex flex-col gap-2 h-fit sticky top-16 rounded-md shadow-md">
         <h1 className="text-zinc-600 font-bold text-xl">PRICE DETAILS</h1>

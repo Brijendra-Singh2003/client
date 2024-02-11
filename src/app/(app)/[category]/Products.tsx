@@ -39,7 +39,7 @@ export default async function Products({ category }: ProductsProps) {
 
   return (
     <>
-      <div className="grid grid-cols-2 sm:gap-2 p-1 sm:p-4 sm:grid-cols-3 lg:grid-cols-4">
+      <div className="grid grid-cols-2 sm:gap-2 p-1 sm:p-4 sm:grid-cols-3 lg:grid-cols-5">
         {items?.map((item: Product) => {
           return (
             <Link

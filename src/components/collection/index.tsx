@@ -13,33 +13,33 @@ export default async function Collection({ category }: { category: category }) {
   const items: any[] = await res.json();
 
   return (
-    <section className="flex mt-1 flex-col w-full sm:my-4 shadow-md bg-white z-8">
+    <section className="flex mt-1 flex-col w-full sm:my-4 z-8 bg-white shadow">
       <Link
         href={"/" + category}
-        className="pt-4 px-4 pb-2 capitalize sm:text-3xl text-xl relative flex justify-between"
+        className="pt-4 px-4 capitalize sm:text-3xl text-xl relative flex justify-between"
       >
         <h2>{category}</h2>
         <span className="text-black p-1">
           <FaChevronRight />
         </span>
       </Link>
-      <div className="flex sm:gap-2 gap-1 p-2 relative overflow-x-scroll z-9 overflow-y-clip h-fit">
+      <div className="flex relative p-2 gap-2 overflow-x-scroll z-9 overflow-y-clip h-fit">
         {items.map((item) => {
           return (
             <Link
               key={item.id}
               href={"/product/" + item.id}
-              className="rounded relative transition-all py-2"
+              className="relative transition-all p-2 border"
             >
               <Image
                 height={200}
                 width={200}
                 src={item.imageUrl}
                 alt={item.name + " image"}
-                className="h-36 md:h-48 lg:h-64 object-cover mx-auto"
+                className="h-36 md:h-48 lg:h-64 object-contain aspect-[3/4] "
               />
-              <h3 className="w-32 px-2 lg:w-52 text-xs md:text-sm text-nowrap overflow-hidden text-ellipsis py-1">
-                {item.name}
+              <h3 className="w-44 text-xs capitalize md:text-sm text-nowrap overflow-hidden text-ellipsis p-1.5">
+                {item.name.substring(0, 40)}
               </h3>
               <h5 className="w-fit ml-2 flex gap-1 px-1 rounded text-xs bg-green-600 text-white items-center">
                 4.2

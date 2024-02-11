@@ -14,7 +14,7 @@ type prop = {
 
 export default function page({ params: { category } }: prop) {
   return (
-    <main className="lg:grid grid-cols-4 flex gap-4">
+    <main className="lg:grid grid-cols-4 flex gap-4 max-w-7xl mx-auto">
       {/* <Filters /> */}
       <div className="col-span-4 bg-white shadow-md">
         <h1 className="px-4 pt-4 capitalize text-2xl lg:text-3xl w-fit">

@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import "./globals.css";
 import { Inter } from "next/font/google";
-import AuthSession from "@/context/AuthSession";
+import ToastBox from "@/context/ToastBox";
 import "react-toastify/dist/ReactToastify.css";
 import { Metadata } from "next";
 
@@ -43,7 +43,7 @@ const layout = ({ children }: { children: ReactNode }) => {
     <html>
       <body className={inter.className + " bg-zinc-100"}>
         {children}
-        <AuthSession />
+        <ToastBox />
       </body>
     </html>
   );

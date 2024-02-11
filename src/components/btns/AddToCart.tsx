@@ -19,18 +19,20 @@ export default function AddToCartBtn({ item, session }: prop) {
   async function addItemToCart() {
     setLoading(true);
     setCartSize(cartSize + 1);
-    const res = await fetch(
+    const data = await fetch(
       process.env.NEXT_PUBLIC_SERVER_URL + "/api/cart/" + item.id,
       {
         credentials: "include",
         method: "POST",
       }
-    );
-    const data = await res.text();
+    )
+      .then((data) => data.text())
+      .catch((err) => console.log(err));
     if (data === "success") {
       RevalidateAction("cart");
       toast.success("Item Added To Cart");
     }
+    toast.error(data || "Failed to add Item to Cart");
     setLoading(false);
     router.push("/cart");
   }

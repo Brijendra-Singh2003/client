@@ -3,7 +3,7 @@
 import React from "react";
 import { Bounce, ToastContainer } from "react-toastify";
 
-export default function AuthSession() {
+export default function ToastBox() {
   return (
     <ToastContainer
       position="top-center"

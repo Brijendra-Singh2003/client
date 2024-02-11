@@ -3,6 +3,7 @@ import React, { FormHTMLAttributes } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import SigninBtn from "@/components/btns/login-btn";
 import { headers } from "next/headers";
+import Nav from "./Nav";
 
 const Navbar = async ({ session }: { session: mySession }) => {
   let count = "0";
@@ -19,8 +20,11 @@ const Navbar = async ({ session }: { session: mySession }) => {
     count = await res.text();
   }
   return (
-    <>
-      <div className="py-2 px-4 lg:px-[10%] bg-blue-600 text-white flex flex-wrap w-full z-10 gap-4 justify-between sticky -top-14 sm:top-0">
+    <Nav
+      top="-56px"
+      className="bg-blue-600 w-full sticky transition-all shadow z-10"
+    >
+      <div className="py-2 px-4 text-white max-w-6xl mx-auto flex flex-wrap w-full z-10 gap-4 justify-between">
         <Link href="/" className="text-3xl font-bold">
           Logo.
         </Link>
@@ -45,31 +49,66 @@ const Navbar = async ({ session }: { session: mySession }) => {
         <SearchBox className="flex sm:hidden text-black w-full h-10 focus-within:shadow flex-grow-[0.5] gap-4 bg-white px-2" />
       </div>
       <div className="w-screen p-2 overflow-x-auto bg-white">
-        <ul className="w-fit flex gap-2 mx-auto">
-          <li className="w-fit border active:scale-90 transition-all cursor-pointer px-3 rounded-lg py-1.5 text-nowrap">
-            <Link href="/topwear">Top wear</Link>
+        <ul className="w-fit flex gap-2 mx-auto py-1">
+          <li className="active:scale-90 transition-all">
+            <Link
+              className="w-fit border cursor-pointer px-3 rounded-lg py-1.5 text-nowrap"
+              href="/topwear"
+            >
+              Topwear
+            </Link>
           </li>
-          <li className="w-fit border active:scale-90 transition-all cursor-pointer px-3 rounded-lg py-1.5 text-nowrap">
-            <Link href="/bottomwear">Bottom wear</Link>
+          <li className="active:scale-90 transition-all">
+            <Link
+              className="w-fit border cursor-pointer px-3 rounded-lg py-1.5 text-nowrap"
+              href="/bottomwear"
+            >
+              Bottomwear
+            </Link>
           </li>
-          <li className="w-fit border active:scale-90 transition-all cursor-pointer px-3 rounded-lg py-1.5 text-nowrap">
-            <Link href="/footwear">Foot wear</Link>
+          <li className="active:scale-90 transition-all">
+            <Link
+              className="w-fit border cursor-pointer px-3 rounded-lg py-1.5 text-nowrap"
+              href="/footwear"
+            >
+              Footwear
+            </Link>
           </li>
-          <li className="w-fit border active:scale-90 transition-all cursor-pointer px-3 rounded-lg py-1.5 text-nowrap">
-            <Link href="/hoodie">Hoodies</Link>
+          <li className="active:scale-90 transition-all">
+            <Link
+              className="w-fit border cursor-pointer px-3 rounded-lg py-1.5 text-nowrap"
+              href="/hoodie"
+            >
+              Hoodies
+            </Link>
           </li>
-          <li className="w-fit border active:scale-90 transition-all cursor-pointer px-3 rounded-lg py-1.5 text-nowrap">
-            <Link href="/cap">Caps</Link>
+          <li className="active:scale-90 transition-all">
+            <Link
+              className="w-fit border cursor-pointer px-3 rounded-lg py-1.5 text-nowrap"
+              href="/cap"
+            >
+              Caps
+            </Link>
           </li>
-          <li className="w-fit border active:scale-90 transition-all cursor-pointer px-3 rounded-lg py-1.5 text-nowrap">
-            <Link href="/mug">Mugs</Link>
+          <li className="active:scale-90 transition-all">
+            <Link
+              className="w-fit border cursor-pointer px-3 rounded-lg py-1.5 text-nowrap"
+              href="/mug"
+            >
+              Mugs
+            </Link>
           </li>
-          <li className="w-fit border active:scale-90 transition-all cursor-pointer px-3 rounded-lg py-1.5 text-nowrap">
-            <Link href="/mousepad">Mousepads</Link>
+          <li className="active:scale-90 transition-all">
+            <Link
+              className="w-fit border cursor-pointer px-3 rounded-lg py-1.5 text-nowrap"
+              href="/mousepad"
+            >
+              Mousepads
+            </Link>
           </li>
         </ul>
       </div>
-    </>
+    </Nav>
   );
 };
 
