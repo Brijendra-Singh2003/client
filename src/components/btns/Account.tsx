@@ -24,7 +24,7 @@ export default function Account({ count }: { count: string }) {
   return (
     <>
       <Link
-        className="p-2 relative rounded-3xl active:bg-blue-800 transition-all"
+        className="p-1 relative rounded-3xl active:bg-blue-800 transition-all"
         href="/cart"
       >
         {count !== "0" && (
@@ -35,7 +35,7 @@ export default function Account({ count }: { count: string }) {
         <AiOutlineShoppingCart />
       </Link>
       <Image
-        className="h-10 w-10 object-cover"
+        className="h-8 w-8 object-cover"
         height={100}
         width={100}
         src="https://static-assets-web.flixcart.com/fk-p-linchpin-web/fk-cp-zion/img/profile-pic-male_4811a1.svg"

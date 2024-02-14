@@ -31,8 +31,9 @@ export default function AddToCartBtn({ item, session }: prop) {
     if (data === "success") {
       RevalidateAction("cart");
       toast.success("Item Added To Cart");
+    } else {
+      toast.error(data || "Failed to add Item to Cart");
     }
-    toast.error(data || "Failed to add Item to Cart");
     setLoading(false);
     router.push("/cart");
   }
