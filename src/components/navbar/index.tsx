@@ -31,7 +31,11 @@ const Navbar = async ({ session }: { session: mySession }) => {
         <SearchBox className="hidden sm:flex w-fit flex-grow-[0.5] gap-4 bg-white text-black px-2 focus-within:outline focus-within:outline-1 focus-within:shadow-lg" />
 
         <div className="flex gap-6 relative pr-2">
-          {session?.id ? <MyAccount count={count} /> : <SignInBtn />}
+          {session?.id ? (
+            <MyAccount count={count} image={session.image} />
+          ) : (
+            <SignInBtn />
+          )}
         </div>
 
         <SearchBox className="flex sm:hidden text-black w-full h-8 focus-within:shadow flex-grow-[0.5] gap-4 bg-white px-2" />

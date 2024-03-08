@@ -75,11 +75,17 @@ export default async function page() {
           <div className="h-4 my-2 w-full bg-gray-200 rounded animate-pulse"></div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 p-4 sticky bottom-0 bg-white">
-          <button className="bg-blue-600 opacity-50 p-3 text-xl rounded-xl">
+        <div className="grid border shadow-md grid-cols-2 sticky bottom-0 bg-white">
+          <button
+            disabled
+            className="bg-white disabled:opacity-40 py-3 active:scale-95 text-xl"
+          >
             Add To Cart
           </button>
-          <button className="bg-blue-600 opacity-50 p-3 text-xl rounded-xl">
+          <button
+            disabled
+            className="bg-yellow-500 disabled:opacity-40 py-3 text-xl"
+          >
             Buy Now
           </button>
         </div>

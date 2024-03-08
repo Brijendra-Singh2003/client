@@ -45,17 +45,17 @@ export default async function Products({ category }: ProductsProps) {
             <Link
               href={`/product/${item.id}`}
               key={item.id}
-              className="flex flex-col col-span-1 gap-2 pb-2 border"
+              className="flex flex-col col-span-1 gap-2 pb-2 border lg:hover:scale-105 lg:hover:-translate-y-3 lg:hover:shadow-lg transition active:scale-95"
             >
               <Image
                 height={200}
                 width={200}
                 src={item.imageUrl}
                 alt=""
-                className="w-full aspect-[3/4] object-contain mx-auto"
+                className="w-full aspect-[3/4] object-contain mx-auto bg-white"
               />
               <div className="col-span-1 px-2 flex flex-col gap-1">
-                <h3 className="overflow-hidden text-xs md:text-sm">
+                <h3 className="line-clamp-2 text-xs md:text-sm">
                   {item.name.toUpperCase()}
                 </h3>
                 <h5 className="w-fit flex gap-1 px-1 py-0.5 rounded text-xs bg-green-600 text-white items-center">

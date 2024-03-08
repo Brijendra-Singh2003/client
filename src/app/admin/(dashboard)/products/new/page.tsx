@@ -36,7 +36,7 @@ export default function Page() {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
     console.log(file);
-    const fileType = file.type.split("/")[0];
+    const fileType = file?.type.split("/")[0];
     if (fileType === "image") {
       CompressAndAdd(file);
     }

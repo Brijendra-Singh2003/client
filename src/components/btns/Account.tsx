@@ -5,14 +5,18 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { cartState, useCartStore } from "@/context/UserContext";
 import { AiOutlineShoppingCart } from "react-icons/ai";
-import { useRouter } from "next/navigation";
 
 import "./login-btn.css";
 
-export default function Account({ count }: { count: string }) {
+export default function Account({
+  count,
+  image,
+}: {
+  count: string;
+  image?: string;
+}) {
   const [isOpen, setIsOpen] = useState("scale-0");
   const { setCartSize, cartSize } = useCartStore((state) => state) as cartState;
-  const router = useRouter();
 
   useEffect(() => {
     setCartSize(0);
@@ -24,7 +28,7 @@ export default function Account({ count }: { count: string }) {
   return (
     <>
       <Link
-        className="p-1 relative rounded-3xl active:bg-blue-800 transition-all"
+        className="p-1 relative rounded-3xl active:scale-95 transition-all"
         href="/cart"
       >
         {count !== "0" && (
@@ -35,10 +39,13 @@ export default function Account({ count }: { count: string }) {
         <AiOutlineShoppingCart />
       </Link>
       <Image
-        className="h-8 w-8 object-cover"
+        className="h-8 w-8 object-cover rounded-full"
         height={100}
         width={100}
-        src="https://static-assets-web.flixcart.com/fk-p-linchpin-web/fk-cp-zion/img/profile-pic-male_4811a1.svg"
+        src={
+          image ||
+          "https://static-assets-web.flixcart.com/fk-p-linchpin-web/fk-cp-zion/img/profile-pic-male_4811a1.svg"
+        }
         alt=""
         onClick={open}
       />
@@ -57,6 +64,12 @@ export default function Account({ count }: { count: string }) {
           href="/profile"
         >
           My Profile
+        </Link>
+        <Link
+          className="px-4 py-2 hover:bg-zinc-100 transition-all"
+          href="/address"
+        >
+          My Addresses
         </Link>
         <Link
           className="px-4 py-2 hover:bg-zinc-100 transition-all"

@@ -56,7 +56,8 @@ type User = {
 type mySession = {
     id: string,
     name: string,
-    email: string
+    email: string,
+    image: string;
 } | null;
 
 type category = "topwear" | "bottomwear" | "footwear" | "hoodie" | "mousepad" | "mug" | "cap";
@@ -75,4 +76,20 @@ type Product = {
     categoryId: number | null;
     userId: string;
     imageId: string;
+}
+
+interface address {
+    id: number;
+    createdAt: string;
+    updatedAt: string;
+    name: string;
+    phone: string;
+    pincode: string;
+    locality: string;
+    address: string;
+    city: string;
+    state: string;
+    landmark: string;
+    work: boolean;
+    userId: string;
 }

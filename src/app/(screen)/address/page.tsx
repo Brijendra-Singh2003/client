@@ -1,35 +1,83 @@
+import { headers } from "next/headers";
+import Link from "next/link";
 import React from "react";
+import DeleteBtn from "./DeleteBtn";
 
-export default function page() {
+export default async function page() {
+  const { addresses } = await fetch(
+    process.env.NEXT_PUBLIC_SERVER_URL + "/api/address/user",
+    { headers: headers(), cache: "no-store" }
+  )
+    .then((res) => res.json())
+    .catch((err) => {
+      return dummyData;
+    });
+
+  console.log(addresses);
+
   return (
-    <main className="bg-white h-screen">
-      <h1 className="py-2 px-4 text-xl">My Addresses</h1>
-      <ul className="w-full p-2 flex flex-col gap-2">
-        <li className="border rounded py-2 px-4">
-          <h1 className="font-bold">Hostle</h1>
-          <p className="text-sm opacity-75">
-            <span>Bhubaneshwar</span>, <span>Odisa</span>
-          </p>
-        </li>
-        <li className="border rounded py-2 px-4">
-          <h1 className="font-bold">Hostle</h1>
-          <p className="text-sm opacity-75">
-            <span>Bhubaneshwar</span>, <span>Odisa</span>
-          </p>
-        </li>
-        <li className="border rounded py-2 px-4">
-          <h1 className="font-bold">Hostle</h1>
-          <p className="text-sm opacity-75">
-            <span>Bhubaneshwar</span>, <span>Odisa</span>
-          </p>
-        </li>
-        <li className="border rounded py-2 px-4">
-          <h1 className="font-bold">Hostle</h1>
-          <p className="text-sm opacity-75">
-            <span>Bhubaneshwar</span>, <span>Odisa</span>
-          </p>
-        </li>
-      </ul>
+    <main className="min-h-screen pt-4 bg-slate-150">
+      <div className="bg-white max-w-2xl w-full mx-auto p-2 xl:p-8">
+        <div className="p-4 flex items-center justify-between bg-white w-full mb-4 mx-auto">
+          <h1 className="text-xl text-ellipsis text-nowrap overflow-hidden">
+            My Addresses
+          </h1>
+          <Link
+            href="/address/edit"
+            className="bg-blue-600 text-sm text-white px-3 py-1.5 rounded active:scale-95 transition"
+          >
+            ADD NEW
+          </Link>
+        </div>
+        <div className="w-full mx-auto py-2 flex flex-col">
+          {addresses?.map((address: address) => (
+            <div key={address.id} className="border bg-white p-4">
+              <div className="flex justify-between">
+                <h1 className="font-semibold uppercase">
+                  {address.name} - {address.phone}
+                </h1>
+                <div className="flex gap-2">
+                  <Link
+                    className="text-blue-600"
+                    href={"/address/edit?id=" + address.id}
+                  >
+                    Edit
+                  </Link>
+                  <DeleteBtn id={address.id} />
+                </div>
+              </div>
+              <p className="mt-2">
+                <span>{address.locality}</span>
+                <span> {address.landmark}</span>
+                <span> {address.address}</span>
+                <span> {address.city}</span>
+                <span>, {address.state} - </span>
+                <span className="font-semibold"> {address.pincode}</span>
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
     </main>
   );
 }
+
+const dummyData = {
+  addresses: [
+    {
+      id: 1,
+      createdAt: "2024-03-08T07:29:14.350Z",
+      updatedAt: "2024-03-08T07:31:27.550Z",
+      name: "Home",
+      phone: "9098775412",
+      pincode: "484551",
+      locality: "",
+      address: "Ward no 14, House no. 114, Pali Birsinghpur",
+      city: "Umariya",
+      state: "Madhya Pradesh",
+      landmark: "",
+      work: false,
+      userId: "117894805345599166360",
+    },
+  ],
+};

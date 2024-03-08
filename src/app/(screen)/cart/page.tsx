@@ -54,7 +54,7 @@ export default async function page() {
       <div className="w-full col-span-2 rounded-md flex flex-col gap-4 mb-4">
         {products}
       </div>
-      <div className="bg-white p-4 flex flex-col gap-2 h-fit sticky top-16 rounded-md shadow-md">
+      <div className="bg-white p-4 flex flex-col gap-2 h-fit sticky top-14 rounded-md shadow-md">
         <h1 className="text-zinc-600 font-bold text-xl">PRICE DETAILS</h1>
         <hr />
         <ul>
