@@ -3,18 +3,11 @@
 import React, { useState } from "react";
 import { formData } from "./page";
 
-export default function Form({
-  profile,
-  userId,
-}: {
-  profile: formData;
-  userId: string;
-}) {
+export default function Form({ profile }: { profile: formData }) {
   const [disableSubmit, setDisableSubmit] = useState(false);
   const [enableEdit, setenableEdit] = useState(!profile);
   const [currProfile, setCurrProfile] = useState<formData>(
     profile || {
-      userId,
       firstName: "",
       lastName: "",
       phone: "",

@@ -1,11 +1,9 @@
-import { getServerSession } from "@/actions/auth";
 import AddToCartBtn from "@/components/btns/AddToCart";
 import Image from "next/image";
 import React, { FC } from "react";
 import { AiFillStar } from "react-icons/ai";
 
 export default async function page({ params }: prop) {
-  const session = (await getServerSession()) as mySession;
   const item: Product = await fetch(
     process.env.NEXT_PUBLIC_SERVER_URL + "/api/products/" + params.id
   )
@@ -100,7 +98,10 @@ export default async function page({ params }: prop) {
           <p className=" px-4 list-disc text-gray-400">{item.description}</p>
         </div>
 
-        <AddToCartBtn session={session} item={item} />
+        <AddToCartBtn
+          item={item}
+          className="grid border grid-cols-2 sticky bottom-0 bg-white text-xl"
+        />
       </div>
     </main>
   );

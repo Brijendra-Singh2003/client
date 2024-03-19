@@ -49,16 +49,19 @@ type collection = {
 type User = {
     id: number;
     email: string;
-    name: string | null;
-    role: string;
+    name: string;
+    image: string;
+    role?: string;
 }
 
 type mySession = {
-    id: string,
-    name: string,
-    email: string,
-    image: string;
-} | null;
+    user: {
+        id: string,
+        name: string,
+        email: string,
+        image: string;
+    } | null;
+}
 
 type category = "topwear" | "bottomwear" | "footwear" | "hoodie" | "mousepad" | "mug" | "cap";
 

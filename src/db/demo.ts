@@ -1,23 +1,25 @@
+"use server";
 // import { PrismaClient } from '@prisma/client/edge'
-// import { PrismaClient } from '@prisma/client'
-// export const prisma = new PrismaClient()
+import { PrismaClient, User } from '@prisma/client'
+const prisma = new PrismaClient()
 
-// export async function searchTop10ProductsByName(searchName: string) {
-//     try {
-//         await prisma.$connect();
-//         const products = await prisma.product.findMany({
-//             where: {
-//                 name: {
-//                     contains: searchName
-//                 }
-//             }
-//         })
-//         console.log(products);
-//         // return products;
-//     } catch (error) {
-//         console.error('Error searching for products:', error);
-//         // return [];
-//     } finally {
-//         await prisma.$disconnect();
-//     }
-// }
+export async function signInCallback({ user }: any) {
+    try {
+        console.log(user);
+        await prisma.$connect();
+        const d = await prisma.user.upsert({
+            where: {
+                email: user.email as string,
+            },
+            update: user as User,
+            create: user as User,
+        });
+        console.log("data: ", d);
+        await prisma.$disconnect();
+
+    } catch (e: any) {
+        console.log("error adding user: ", e.message);
+    } finally {
+        return true;
+    }
+}

@@ -7,6 +7,7 @@ import { cartState, useCartStore } from "@/context/UserContext";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 
 import "./login-btn.css";
+import { SignOut } from "../Auth-Components";
 
 export default function Account({
   count,
@@ -77,12 +78,7 @@ export default function Account({
         >
           My Dashbord
         </Link>
-        <Link
-          href={process.env.NEXT_PUBLIC_SERVER_URL + "/api/auth/signout"}
-          className="px-4 py-2 text-left text-red-600 hover:bg-zinc-100 transition-all"
-        >
-          Logout
-        </Link>
+        <SignOut className="px-4 py-2 hover:bg-zinc-100 transition-all" />
       </div>
     </>
   );

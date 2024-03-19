@@ -2,24 +2,28 @@ import Link from "next/link";
 import React, { FormHTMLAttributes } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import MyAccount from "@/components/btns/Account";
+import { SignIn } from "../Auth-Components";
 import { headers } from "next/headers";
-import Nav from "./Nav";
-import SignInBtn from "../btns/SignInBtn";
 
 const Navbar = async ({ session }: { session: mySession }) => {
   let count = "0";
   if (session) {
-    const res = await fetch(
-      process.env.NEXT_PUBLIC_SERVER_URL + "/api/cart/size",
-      {
-        headers: headers(),
-        next: {
-          tags: ["cart"],
-        },
-        cache: "no-store",
-      }
-    );
-    count = await res.text();
+    try {
+      count = await fetch(
+        process.env.NEXT_PUBLIC_SERVER_URL + "/api/cart/size",
+        {
+          headers: headers(),
+        }
+      )
+        .then((res) => res.text())
+        .catch((e) => {
+          console.log(e.message);
+          return "0";
+        });
+    } catch (error: any) {
+      console.log(error.message);
+      count = "0";
+    }
   }
   return (
     <nav className="bg-blue-600 w-full sticky -top-12 transition-all shadow z-10">
@@ -31,10 +35,10 @@ const Navbar = async ({ session }: { session: mySession }) => {
         <SearchBox className="hidden sm:flex w-fit flex-grow-[0.5] gap-4 bg-white text-black px-2 focus-within:outline focus-within:outline-1 focus-within:shadow-lg" />
 
         <div className="flex gap-6 relative pr-2">
-          {session?.id ? (
-            <MyAccount count={count} image={session.image} />
+          {session ? (
+            <MyAccount count={count} image={session.user?.image} />
           ) : (
-            <SignInBtn />
+            <SignIn className="px-2 py-1 text-black bg-white active:scale-95 transition-all rounded-lg" />
           )}
         </div>
 

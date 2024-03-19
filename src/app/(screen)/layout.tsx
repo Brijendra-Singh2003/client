@@ -1,4 +1,4 @@
-import { getServerSession } from "@/actions/auth";
+import { auth } from "@/actions/auth";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import MbNav from "@/components/navbar/MbNav";
@@ -11,7 +11,7 @@ export default async function layout({ children }: { children: ReactNode }) {
     ?.match(/Android|iPhone|iPad|iPod|webOS|Opera Mini|IEMobile|WPDesktop/i)
     ? true
     : false;
-  const session = (await getServerSession()) as mySession;
+  const session = (await auth()) as mySession;
   return (
     <>
       {isMobile ? <MbNav session={session} /> : <Navbar session={session} />}

@@ -1,12 +1,12 @@
 "use client";
 
 import React from "react";
-import { Bounce, ToastContainer } from "react-toastify";
+import { ToastContainer, Slide } from "react-toastify";
 
 export default function ToastBox() {
   return (
     <ToastContainer
-      position="top-center"
+      position="bottom-right"
       autoClose={5000}
       hideProgressBar={false}
       newestOnTop={false}
@@ -15,8 +15,8 @@ export default function ToastBox() {
       pauseOnFocusLoss
       draggable
       pauseOnHover
-      theme="dark"
-      transition={Bounce}
+      theme="light"
+      transition={Slide}
     />
   );
 }

@@ -1,6 +1,7 @@
 // "use client";
 
 // import { category } from "@/db/Product";
+import AddToCartBtn from "@/components/btns/AddToCart";
 import Image from "next/image";
 import Link from "next/link";
 // import { useRouter, useSearchParams } from "next/navigation";
@@ -54,7 +55,7 @@ export default async function Products({ category }: ProductsProps) {
                 alt=""
                 className="w-full aspect-[3/4] object-contain mx-auto bg-white"
               />
-              <div className="col-span-1 px-2 flex flex-col gap-1">
+              <div className="col-span-1 h-full px-2 flex flex-col gap-1 relative">
                 <h3 className="line-clamp-2 text-xs md:text-sm">
                   {item.name.toUpperCase()}
                 </h3>
@@ -72,11 +73,15 @@ export default async function Products({ category }: ProductsProps) {
                   </span>
                 </p>
               </div>
+              <AddToCartBtn
+                item={item}
+                className="grid border grid-cols-2 mx-2 bg-white text-sm"
+              />
             </Link>
           );
         })}
       </div>
-      <div className="w-full p-4 flex justify-center items-center gap-4">
+      {/* <div className="w-full p-4 flex justify-center items-center gap-4">
         <Link
           className="bg-blue-600 text-white rounded py-1.5 px-3 disabled:opacity-50 active:scale-95 disabled:active:scale-100"
           // disabled={!page || loading}
@@ -92,7 +97,7 @@ export default async function Products({ category }: ProductsProps) {
         >
           Next
         </Link>
-      </div>
+      </div> */}
     </>
   );
 }

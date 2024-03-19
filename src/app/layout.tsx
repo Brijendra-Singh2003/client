@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import ToastBox from "@/context/ToastBox";
 import "react-toastify/dist/ReactToastify.css";
 import { Metadata } from "next";
+import { SessionProvider } from "next-auth/react";
 
 const inter = Inter({ weight: "400", subsets: ["latin"] });
 
@@ -42,7 +43,7 @@ const layout = ({ children }: { children: ReactNode }) => {
   return (
     <html>
       <body className={inter.className + " bg-zinc-100"}>
-        {children}
+        <SessionProvider>{children}</SessionProvider>
         <ToastBox />
       </body>
     </html>
