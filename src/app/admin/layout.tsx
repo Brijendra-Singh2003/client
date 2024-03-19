@@ -2,10 +2,10 @@ import React, { ReactNode } from "react";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import AdminSidebar from "@/components/admin/Sidebar";
-import { getServerSession } from "@/actions/auth";
+import { auth } from "@/actions/auth";
 
 export default async function layout({ children }: { children: ReactNode }) {
-  const session = await getServerSession();
+  const session = (await auth()) as mySession;
 
   return (
     <>

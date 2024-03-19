@@ -25,7 +25,7 @@ export default async function MbNav({ session }: { session: mySession }) {
       <BackBtn className="text-2xl aspect-square p-2 rounded-full active:bg-zinc-300 transition-all" />
       <SearchBox className="flex h-full w-full sm-w-56 lg:w-64 border focus-within:shadow xl:w-96 md:border md:px-2 rounded" />
       <div className="flex gap-6">
-        {session?.id ? (
+        {session.user?.id ? (
           <Link className="mr-3 w-6  h-6 relative rounded-3xl" href="/cart">
             <span className="absolute -top-3 -right-3 text-sm text-white bg-red-600 h-5 px-1 rounded-xl font-mono">
               {count}

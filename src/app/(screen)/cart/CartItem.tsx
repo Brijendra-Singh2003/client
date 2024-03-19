@@ -72,7 +72,7 @@ export default function CartItem({ list }: props) {
   }
 
   useEffect(() => {
-    init(products);
+    init(list);
   }, []);
 
   return (

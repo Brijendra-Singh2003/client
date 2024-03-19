@@ -34,8 +34,8 @@ export default function Nav({
   });
 
   return (
-    <nav className={className} ref={navRef}>
+    <header className={className} ref={navRef}>
       {children}
-    </nav>
+    </header>
   );
 }
