@@ -35,6 +35,12 @@ export const { handlers: { GET, POST }, auth, signIn, signOut } = NextAuth({
             });
             console.log(await data.text());
             return true;
-        }
+        },
+        session: async ({ session, token, user }) => {
+            if (token.sub) {
+                session.user.id = token.sub;
+            }
+            return session;
+        },
     }
 });

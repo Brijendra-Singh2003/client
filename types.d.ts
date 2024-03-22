@@ -81,6 +81,24 @@ type Product = {
     imageId: string;
 }
 
+type newProduct = {
+    name: string;
+    description: string;
+    price: number;
+    discount: number;
+    imageUrl: string;
+    stock: number;
+    brandId?: number;
+    categoryId?: number;
+    imageId: string;
+    userId: string;
+}
+
+type new_item = {
+    userId: string;
+    productId: number;
+}
+
 interface address {
     id: number;
     createdAt: string;

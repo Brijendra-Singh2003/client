@@ -5,22 +5,13 @@ import React from "react";
 import { AiFillStar } from "react-icons/ai";
 import { FaChevronRight } from "react-icons/fa6";
 
-export default async function Collection({ category }: { category: category }) {
-  const items: any[] = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/products?category=${category}`,
-    {
-      next: {
-        tags: ["products", category],
-      },
-    }
-  )
-    .then((data) => data.json())
-    .catch((err) => {
-      console.log(err);
-      return [];
-    });
-  // console.log(await res.text());
-
+export default async function Collection({
+  category,
+  items,
+}: {
+  category: category;
+  items: Product[];
+}) {
   return (
     <section className="flex mt-1 flex-col w-full sm:my-4 z-8 bg-white shadow">
       <Link

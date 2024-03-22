@@ -2,6 +2,7 @@ import React from "react";
 import Form from "./Form";
 import { auth } from "@/actions/auth";
 import { headers } from "next/headers";
+import { getProfile } from "@/db/User";
 
 export type formData = {
   firstName?: string;
@@ -10,23 +11,20 @@ export type formData = {
   gender?: "male" | "female";
 };
 
+const defaultData = {
+  firstName: "",
+  lastName: "",
+  phone: "",
+};
+
 export default async function Page() {
   const session = await auth();
-  let profile: formData = {
-    firstName: "",
-    lastName: "",
-    phone: "",
-  };
+  let profile: formData = defaultData;
 
-  if (session) {
-    profile = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + "/api/user/", {
-      headers: headers(),
-    })
-      .then((res) => res.json())
-      .catch((e) => {
-        console.log(e.message);
-        return {};
-      });
+  if (session?.user) {
+    profile =
+      ((await getProfile(session.user.id as string)) as formData) ||
+      defaultData;
   } else {
     return (
       <div className="flex flex-col gap-4 p-4">

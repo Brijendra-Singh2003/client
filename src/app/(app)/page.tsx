@@ -1,18 +1,19 @@
 import Collection, { CollectionSkeleton } from "@/components/collection";
 import App from "@/components/swiper";
+import { prisma } from "@/db/demo";
 // import { category } from "@/db/Product";
 import { headers } from "next/headers";
 import { Suspense } from "react";
 
-const categories: category[] = [
-  "topwear",
-  "bottomwear",
-  "footwear",
-  "hoodie",
-  "cap",
-  "mousepad",
-  "mug",
-];
+// const categories: category[] = [
+//   "topwear",
+//   "bottomwear",
+//   "mousepad",
+//   "footwear",
+//   "mug",
+//   "cap",
+//   "hoodie",
+// ];
 
 export default async function Home() {
   const isMobile: boolean = headers()
@@ -20,6 +21,11 @@ export default async function Home() {
     ?.match(/Android|iPhone|iPad|iPod|webOS|Opera Mini|IEMobile|WPDesktop/i)
     ? true
     : false;
+
+  const [categories, products] = await prisma.$transaction([
+    prisma.category.findMany(),
+    prisma.product.findMany(),
+  ]);
 
   return (
     <>
@@ -29,10 +35,15 @@ export default async function Home() {
       {categories.map((category) => {
         return (
           <Suspense
-            key={category}
-            fallback={<CollectionSkeleton category={category} />}
+            key={category.id}
+            fallback={
+              <CollectionSkeleton category={category.name as category} />
+            }
           >
-            <Collection category={category} />
+            <Collection
+              category={category.name as category}
+              items={products.filter((p) => p.categoryId === category.id)}
+            />
           </Suspense>
         );
       })}

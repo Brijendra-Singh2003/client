@@ -1,17 +1,20 @@
 import { headers } from "next/headers";
 import React from "react";
 import CartItem from "./CartItem";
+import { auth } from "@/actions/auth";
+import { prisma } from "@/db/demo";
 
 export default async function page() {
-  let products = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + "/api/cart", {
-    headers: headers(),
-    cache: "no-store",
-  })
-    .then((data) => data.json())
-    .catch((err) => {
-      console.log(err);
-      return [];
-    });
+  const session = await auth();
+
+  if (!session?.user) {
+    return <h1>Please Signin to view cart</h1>;
+  }
+
+  const products = await prisma.item.findMany({
+    where: { userId: session.user.id },
+    select: { product: true, id: true, quantity: true },
+  });
 
   products.reverse();
 

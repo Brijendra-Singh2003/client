@@ -11,10 +11,9 @@ export default async function layout({ children }: { children: ReactNode }) {
     ?.match(/Android|iPhone|iPad|iPod|webOS|Opera Mini|IEMobile|WPDesktop/i)
     ? true
     : false;
-  const session = (await auth()) as mySession;
   return (
     <>
-      {isMobile ? <MbNav session={session} /> : <Navbar session={session} />}
+      {isMobile ? <MbNav /> : <Navbar />}
       {children}
       <Footer />
     </>

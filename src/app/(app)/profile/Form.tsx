@@ -26,7 +26,7 @@ export default function Form({ profile }: { profile: formData }) {
     e.preventDefault();
     setDisableSubmit(true);
     // console.log(currProfile);
-    const res = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + "/api/user/", {
+    const res = await fetch("/api/user/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(currProfile),

@@ -1,17 +1,18 @@
 import AddToCartBtn from "@/components/btns/AddToCart";
+import { getProductById } from "@/db/Product";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 import React, { FC } from "react";
 import { AiFillStar } from "react-icons/ai";
 
 export default async function page({ params }: prop) {
-  const item: Product = await fetch(
-    process.env.NEXT_PUBLIC_SERVER_URL + "/api/products/" + params.id
-  )
-    .then((data) => data.json())
-    .catch((err) => {
-      console.log(err);
-      return {};
-    });
+  const item = (await getProductById(
+    Number.parseInt(params.id)
+  )) as Product | null;
+
+  if (!item) {
+    redirect("/");
+  }
 
   return (
     <main className="product-main sm:bg-white py-4 md:px-4 flex flex-col gap-4 items-center sm:items-start sm:min-w-96 sm:grid grid-cols-3">

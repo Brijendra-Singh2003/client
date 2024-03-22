@@ -26,7 +26,7 @@ export default function Form({
     e.preventDefault();
     setIsSaving(true);
 
-    fetch(process.env.NEXT_PUBLIC_SERVER_URL + "/api/address/" + (id || ""), {
+    fetch("/api/address/" + (id || ""), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(address),
@@ -44,10 +44,11 @@ export default function Form({
       .catch((err) => {
         toast.error("failed to add address");
         setIsSaving(false);
+      })
+      .finally(() => {
+        RevalidateURL("/address");
+        router.push("/address");
       });
-
-    RevalidateURL("/address");
-    router.push("/address");
   }
 
   return (

@@ -4,6 +4,8 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { AiFillStar } from "react-icons/ai";
+import { getProductBySearch } from "@/db/Product";
+import { redirect } from "next/navigation";
 
 type Product = {
   id: number;
@@ -25,18 +27,22 @@ export default async function page({
   searchParams: { page, q, category },
 }: prop) {
   const currPage = page ? Number.parseInt(page) : 0;
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/products/search?q=${q}&page=${page}` +
-      (category ? "&category=" + category : ""),
-    { cache: "no-store" }
-  );
-  const products: Product[] = await res.json();
-  console.log(products);
+  // const res = await fetch(
+  //   `${process.env.NEXT_PUBLIC_SERVER_URL}/api/products/search?q=${q}&page=${page}` +
+  //     (category ? "&category=" + category : ""),
+  //   { cache: "no-store" }
+  // );
+  // const products: Product[] = await res.json();
+  // console.log(products);
   // await getProductBySearch(
   //   q as string,
   //   currPage,
   //   category
   // );
+  if (!q) {
+    redirect("/");
+  }
+  const products = await getProductBySearch(q, currPage, category);
   return (
     <main className="lg:grid grid-cols-5 gap-4 flex">
       <Filters q={q} category={category} />

@@ -8,40 +8,19 @@ import Link from "next/link";
 // import React, { useEffect, useState } from "react";
 import { AiFillStar } from "react-icons/ai";
 
-type ProductsProps = {
-  category: category;
-};
+type props = {
+  id: number;
+  name: string;
+  price: number;
+  discount: number;
+  imageUrl: string;
+}[];
 
-export default async function Products({ category }: ProductsProps) {
-  // const [loading, setLoading] = useState<boolean>(true);
-  // const [items, setItems] = useState<Product[]>([]);
-  // const router = useRouter();
-  // const params = useSearchParams();
-  const page = 0;
-  // params.get("page")
-  //   ? Number.parseInt(params.get("page") as string)
-  //   : 0;
-
-  // useEffect(() => {
-  // setLoading(true);
-
-  const items = await (
-    await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/products?category=${category}&page=${page}`,
-      { cache: "no-store" }
-    )
-  ).json();
-  // .then((res) => res.json())
-  // .then((data) => {
-  //   setItems(data);
-  //   setLoading(false);
-  // });
-  // }, [page]);
-
+export default async function Products({ items }: { items: props }) {
   return (
     <>
       <div className="grid grid-cols-2 sm:gap-2 p-1 sm:p-4 sm:grid-cols-3 lg:grid-cols-5">
-        {items?.map((item: Product) => {
+        {items?.map((item) => {
           return (
             <Link
               href={`/product/${item.id}`}

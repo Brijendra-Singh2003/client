@@ -1,6 +1,5 @@
 "use client";
 
-import { RevalidateURL } from "@/actions/RevalidateTag";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
@@ -12,7 +11,7 @@ export default function DeleteBtn({ id }: { id: number | string }) {
   async function remove() {
     setPending(true);
     try {
-      await fetch(process.env.NEXT_PUBLIC_SERVER_URL + "/api/address/" + id, {
+      await fetch("/api/address/" + id, {
         method: "DELETE",
         credentials: "include",
       }).catch((err) => console.log(err.message));

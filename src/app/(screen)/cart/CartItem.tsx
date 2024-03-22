@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { FaRegTrashCan } from "react-icons/fa6";
+import { FaRegTrashCan, FaAngleDown } from "react-icons/fa6";
 import { AiFillStar } from "react-icons/ai";
 import Link from "next/link";
 import { toast } from "react-toastify";
@@ -11,7 +11,7 @@ import React from "react";
 
 type props = {
   list: {
-    product: item;
+    product: Product;
     id: number;
     quantity: number;
   }[];
@@ -23,15 +23,12 @@ export default function CartItem({ list }: props) {
 
   async function setCount(id: number, quantity: number) {
     console.log("upadting: ", { id: id, quantity: quantity });
-    const res = await fetch(
-      process.env.NEXT_PUBLIC_SERVER_URL + "/api/cart/update",
-      {
-        method: "POST",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: id, quantity: quantity }),
-      }
-    );
+    const res = await fetch("/api/cart", {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: id, quantity: quantity }),
+    });
     if (res.ok) {
       const data = await res.json();
       console.log(data);
@@ -39,18 +36,15 @@ export default function CartItem({ list }: props) {
       init(data);
       toast.success("Quantuty updated");
     } else {
-      toast.success("Failed to update");
+      toast.error(await res.text());
     }
   }
 
   async function RemoveItem(id: number) {
-    const res = await fetch(
-      process.env.NEXT_PUBLIC_SERVER_URL + "/api/cart/" + id,
-      {
-        method: "DELETE",
-        credentials: "include",
-      }
-    );
+    const res = await fetch("/api/cart/" + id, {
+      method: "DELETE",
+      credentials: "include",
+    });
     if (res.ok) {
       const data = await res.json();
       setProducts(data.reverse());
@@ -123,7 +117,7 @@ function Item({
   setCount,
   RemoveItem,
 }: {
-  product: item;
+  product: Product;
   id: number;
   quantity: number;
   setCount: (id: number, count: number) => Promise<void>;
@@ -140,7 +134,7 @@ function Item({
   return (
     <div
       key={product.id}
-      className="grid grid-cols-subgrid bg-white rounded shadow md:shadow-md relative transition-all p-2"
+      className="grid grid-cols-3 bg-white rounded shadow md:shadow-md relative transition-all p-2 md:p-4 md:gap-4"
     >
       <Link href={"/product/" + product.id} className="col-span-1">
         <Image
@@ -148,10 +142,10 @@ function Item({
           width={600}
           src={product.imageUrl}
           alt={product.name + " image"}
-          className="aspect-square w-full md:p-4 object-contain mx-auto"
+          className="aspect-square w-full object-contain mx-auto"
         />
       </Link>
-      <div className="col-span-2 overflow-x-hidden text-ellipsis py-2">
+      <div className="col-span-2 flex flex-col md:gap-2 overflow-x-hidden text-sm text-ellipsis">
         <Link
           href={"/product/" + product.id}
           className="px-2 uppercase lg:w-52 text-nowrap py-1"
@@ -163,7 +157,7 @@ function Item({
           <AiFillStar />
         </h5>
         <p className="flex items-center px-2 gap-1">
-          <b className="text-lg">
+          <b className="md:text-lg">
             ₹{(product.price - product.discount) * quantity}
           </b>
           <span className="text-gray-400 line-through">
@@ -173,6 +167,7 @@ function Item({
             {Math.floor((product.discount / product.price) * 100)}% Off
           </span>
         </p>
+
         <div className="flex w-fit m-4 items-center border h-fit border-blue-600">
           <button
             disabled={quantity == 1 || loading}
@@ -191,6 +186,9 @@ function Item({
           </button>
         </div>
       </div>
+
+      <div className="col-span-2"></div>
+
       <div className="col-span-3 bottom-4 right-4 flex gap-2 justify-end px-1">
         <button
           onClick={async () => {
@@ -199,11 +197,11 @@ function Item({
             setloading(false);
           }}
           disabled={loading}
-          className="px-3 flex disabled:opacity-40 justify-center transition-all active:scale-95 py-1.5 bg-red-500 active:bg-red-600 border rounded text-white"
+          className="px-2 flex disabled:opacity-40 justify-center transition-all active:scale-95 py-1 bg-red-500 active:bg-red-600 border rounded text-white"
         >
           <FaRegTrashCan />
         </button>
-        <button className="px-3 transition-all active:scale-95 py-1.5 bg-blue-600 active:bg-blue-700 rounded text-white">
+        <button className="px-2 transition-all active:scale-95 py-1 bg-blue-600 active:bg-blue-700 rounded text-white">
           Buy Now
         </button>
       </div>

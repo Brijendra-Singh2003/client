@@ -1,23 +1,34 @@
 import React from "react";
 import Form from "./form";
-import { headers } from "next/headers";
+import { redirect } from "next/navigation";
+import { prisma } from "@/db/demo";
 
-export default async function page(params: { searchParams: { id?: string } }) {
-  const addresses = params.searchParams.id
-    ? await fetch(
-        process.env.NEXT_PUBLIC_SERVER_URL +
-          "/api/address/" +
-          params.searchParams.id,
-        { headers: headers() }
-      )
-        .then((res) => res.json())
-        .catch((err) => {
-          return dummyData;
-        })
-    : dummyData;
+export default async function page({
+  searchParams,
+}: {
+  searchParams: { id?: string | number };
+}) {
+  const id = Number.parseInt(searchParams.id as string);
+
+  if (!id) {
+    return (
+      <main className="w-screen flex justify-center py-4">
+        <Form
+          id={searchParams.id as string}
+          defaultData={dummyData as address}
+        />
+      </main>
+    );
+  }
+
+  const addresses = await prisma.address.findUnique({ where: { id: id } });
+  if (!addresses) {
+    redirect("/address");
+  }
+
   return (
     <main className="w-screen flex justify-center py-4">
-      <Form id={params.searchParams.id} defaultData={addresses} />
+      <Form id={searchParams.id as string} defaultData={addresses as any} />
     </main>
   );
 }

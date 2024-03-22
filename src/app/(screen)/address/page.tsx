@@ -1,19 +1,22 @@
-import { headers } from "next/headers";
 import Link from "next/link";
 import React from "react";
 import DeleteBtn from "./DeleteBtn";
+import { prisma } from "@/db/demo";
+import { auth } from "@/actions/auth";
+import { Address } from "@prisma/client";
 
 export default async function page() {
-  const { addresses } = await fetch(
-    process.env.NEXT_PUBLIC_SERVER_URL + "/api/address/user",
-    { headers: headers(), cache: "no-store" }
-  )
-    .then((res) => res.json())
-    .catch((err) => {
-      return dummyData;
-    });
+  const session = await auth();
 
-  console.log(addresses);
+  let addresses: Address[] = [];
+
+  if (session?.user) {
+    addresses = await prisma.address.findMany({
+      where: {
+        userId: session.user.id as string,
+      },
+    });
+  }
 
   return (
     <main className="min-h-screen pt-4 bg-slate-150">
@@ -30,7 +33,7 @@ export default async function page() {
           </Link>
         </div>
         <div className="w-full mx-auto py-2 flex flex-col">
-          {addresses?.map((address: address) => (
+          {addresses?.map((address) => (
             <div key={address.id} className="border bg-white p-4">
               <div className="flex justify-between">
                 <h1 className="font-semibold uppercase">

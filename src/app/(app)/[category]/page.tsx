@@ -2,6 +2,7 @@ import Filters from "@/components/filter";
 // import { category } from "@/db/Product";
 import React, { Suspense } from "react";
 import Products, { ProductSkeleton } from "./Products";
+import { getProductsByCategory } from "@/db/Product";
 
 type prop = {
   params: {
@@ -12,7 +13,8 @@ type prop = {
   };
 };
 
-export default function page({ params: { category } }: prop) {
+export default async function page({ params: { category } }: prop) {
+  const items = await getProductsByCategory(category);
   return (
     <main className="lg:grid grid-cols-4 flex gap-4 max-w-7xl mx-auto">
       {/* <Filters /> */}
@@ -21,7 +23,7 @@ export default function page({ params: { category } }: prop) {
           {category}
         </h1>
         <Suspense fallback={ProductSkeleton}>
-          <Products category={category} />
+          <Products items={items} />
         </Suspense>
       </div>
     </main>

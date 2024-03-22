@@ -13,7 +13,7 @@ export default function Account({
   count,
   image,
 }: {
-  count: string;
+  count: string | number;
   image?: string;
 }) {
   const [isOpen, setIsOpen] = useState("scale-0");

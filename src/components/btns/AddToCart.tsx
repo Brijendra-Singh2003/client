@@ -6,7 +6,13 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 
 type prop = {
-  item: Product;
+  item: {
+    id: number;
+    name: string;
+    price: number;
+    discount: number;
+    imageUrl: string;
+  };
   className?: string;
 };
 
@@ -17,13 +23,10 @@ export default function AddToCartBtn({ item, className }: prop) {
   async function addItemToCart() {
     setLoading(true);
     setCartSize(cartSize + 1);
-    const data = await fetch(
-      process.env.NEXT_PUBLIC_SERVER_URL + "/api/cart/" + item.id,
-      {
-        credentials: "include",
-        method: "POST",
-      }
-    )
+    const data = await fetch("/api/cart/" + item.id, {
+      credentials: "include",
+      method: "POST",
+    })
       .then((data) => data.text())
       .catch((err) => console.log(err));
     if (data === "success") {
