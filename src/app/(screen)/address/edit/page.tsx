@@ -2,6 +2,7 @@ import React from "react";
 import Form from "./form";
 import { redirect } from "next/navigation";
 import { prisma } from "@/db/demo";
+import { getAddressById } from "@/db/address";
 
 export default async function page({
   searchParams,
@@ -21,7 +22,7 @@ export default async function page({
     );
   }
 
-  const addresses = await prisma.address.findUnique({ where: { id: id } });
+  const addresses = await getAddressById(id);
   if (!addresses) {
     redirect("/address");
   }

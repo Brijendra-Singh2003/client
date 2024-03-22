@@ -13,11 +13,11 @@ export async function searchTop10ProductsByName(searchName: string) {
             }
         })
         console.log(products);
-        // return products;
+        return products;
     } catch (error) {
         console.error('Error searching for products:', error);
-        // return [];
+        return [];
     } finally {
-        // await prisma.$disconnect();
+        await prisma.$disconnect();
     }
 }

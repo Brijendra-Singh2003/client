@@ -2,7 +2,9 @@ import ProductsTable from "@/components/admin/ProductsTable";
 import Link from "next/link";
 import { IoMdAdd } from "react-icons/io";
 import { Suspense } from "react";
-import { headers } from "next/headers";
+import { getUserProducts } from "@/db/User";
+import { auth } from "@/actions/auth";
+import { redirect } from "next/navigation";
 
 export default async function Page() {
   return (
@@ -43,13 +45,10 @@ export default async function Page() {
 }
 
 const Table = async () => {
-  const r = await fetch(
-    process.env.NEXT_PUBLIC_SERVER_URL + "/api/user/products",
-    {
-      headers: headers(),
-      cache: "no-store",
-    }
-  );
-  const products = await r.json();
+  const session = await auth();
+  if (!session?.user) {
+    redirect("/");
+  }
+  const products = await getUserProducts(session.user.id as string);
   return <ProductsTable data={products} />;
 };

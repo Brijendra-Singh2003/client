@@ -3,6 +3,7 @@ import React from "react";
 import CartItem from "./CartItem";
 import { auth } from "@/actions/auth";
 import { prisma } from "@/db/demo";
+import { getItemByUserId } from "@/db/item";
 
 export default async function page() {
   const session = await auth();
@@ -11,10 +12,7 @@ export default async function page() {
     return <h1>Please Signin to view cart</h1>;
   }
 
-  const products = await prisma.item.findMany({
-    where: { userId: session.user.id },
-    select: { product: true, id: true, quantity: true },
-  });
+  const products = await getItemByUserId(session.user.id as string);
 
   products.reverse();
 

@@ -5,7 +5,6 @@ import MyAccount from "@/components/btns/Account";
 import { SignIn } from "../Auth-Components";
 import { getCartSize } from "@/db/item";
 import { auth } from "@/actions/auth";
-import { getAllUsers } from "@/db/User";
 
 const Navbar = async () => {
   const session = await auth();

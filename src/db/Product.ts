@@ -4,25 +4,32 @@ export type category = "topwear" | "bottomwear" | "footwear" | "hoodie" | "mouse
 
 export async function getAllProducts() {
     try {
+        await prisma.$connect();
         const products = await prisma.product.findMany();
         return products;
     } catch (error: any) {
         console.log("error occured while getting all products: ", error.message);
         return [];
+    } finally {
+        await prisma.$disconnect();
     }
 }
 
 export async function addProduct(product: newProduct) {
     try {
+        await prisma.$connect();
         const newProduct = await prisma.product.create({ data: product });
         return newProduct;
     } catch (error: any) {
         console.log(error.message);
+    } finally {
+        await prisma.$disconnect();
     }
 }
 
 export async function getProductsByCategory(category: category) {
     try {
+        await prisma.$connect();
         const products = await prisma.product.findMany({
             where: {
                 category: {
@@ -41,11 +48,14 @@ export async function getProductsByCategory(category: category) {
     } catch (error: any) {
         console.log("error occured while getting products by category: ", error.message);
         return [];
+    } finally {
+        await prisma.$disconnect();
     }
 }
 
 export async function getProductById(id: number) {
     try {
+        await prisma.$connect();
         const product = await prisma.product.findUnique({
             where: {
                 id: id
@@ -54,12 +64,15 @@ export async function getProductById(id: number) {
         return product;
     } catch (error: any) {
         console.log("error occured while getting product by id: ", error.message);
-        return { error: error.message };
+        return null;
+    } finally {
+        await prisma.$disconnect();
     }
 }
 
 export async function getProductBySearch(searchString: string, page: number, category?: category) {
     try {
+        await prisma.$connect();
         const product = await prisma.product.findMany({
             where: {
                 name: {
@@ -85,5 +98,7 @@ export async function getProductBySearch(searchString: string, page: number, cat
     } catch (error: any) {
         console.log("error occured while getting product by id: ", error.message);
         return [];
+    } finally {
+        await prisma.$disconnect();
     }
 }

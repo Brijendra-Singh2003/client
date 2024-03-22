@@ -19,6 +19,7 @@ export async function POST(req: NextRequest) {
     if (!id || !quantity) {
         return new NextResponse("bad request");
     }
+    await prisma.$connect();
 
     const item = await prisma.item.update({ where: { id }, data: { quantity } });
 
@@ -26,6 +27,8 @@ export async function POST(req: NextRequest) {
         where: { userId: session.user.id },
         select: { product: true, id: true, quantity: true },
     });
+
+    await prisma.$disconnect();
 
     return new NextResponse(JSON.stringify(products));
 }

@@ -6,9 +6,7 @@ import React, { FC } from "react";
 import { AiFillStar } from "react-icons/ai";
 
 export default async function page({ params }: prop) {
-  const item = (await getProductById(
-    Number.parseInt(params.id)
-  )) as Product | null;
+  const item = await getProductById(Number.parseInt(params.id));
 
   if (!item) {
     redirect("/");

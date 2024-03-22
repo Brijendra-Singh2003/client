@@ -4,6 +4,7 @@ import DeleteBtn from "./DeleteBtn";
 import { prisma } from "@/db/demo";
 import { auth } from "@/actions/auth";
 import { Address } from "@prisma/client";
+import { getAddressByUserId } from "@/db/address";
 
 export default async function page() {
   const session = await auth();
@@ -11,11 +12,7 @@ export default async function page() {
   let addresses: Address[] = [];
 
   if (session?.user) {
-    addresses = await prisma.address.findMany({
-      where: {
-        userId: session.user.id as string,
-      },
-    });
+    addresses = await getAddressByUserId(session.user.id as string);
   }
 
   return (

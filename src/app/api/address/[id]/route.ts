@@ -1,4 +1,5 @@
 import { auth } from "@/actions/auth";
+import { deleteAddressById, getAddressByUserId, updateAddressById } from "@/db/address";
 import { prisma } from "@/db/demo";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -10,13 +11,13 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
         return new NextResponse("unauthenticated");
     }
 
-    const addresses = await prisma.user.findUnique({ where: { id: session?.user?.id }, select: { addresses: { select: { id: true } } } });
+    const addresses = await getAddressByUserId(session.user.id as string);
 
-    if (!addresses || !addresses.addresses.find(a => a.id === id)) {
+    if (addresses.find(a => a.id === id)) {
         return new NextResponse("unauthorised");
     }
 
-    const address = await prisma.address.delete({ where: { id } });
+    const address = await deleteAddressById(id);
 
     return new NextResponse(JSON.stringify(address));
 }
@@ -30,19 +31,16 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
         return new NextResponse("missing required feilds");
     }
 
-    const address = await prisma.address.update({
-        where: { id },
-        data: {
-            name: data.name,
-            address: data.address,
-            city: data.city,
-            state: data.state,
-            pincode: data.pincode,
-            locality: data.locality,
-            landmark: data.landmark,
-            phone: data.phone,
-        },
-    });
+    const address = await updateAddressById(id, {
+        name: data.name,
+        address: data.address,
+        city: data.city,
+        state: data.state,
+        pincode: data.pincode,
+        locality: data.locality,
+        landmark: data.landmark,
+        phone: data.phone,
+    } as address);
 
     return new NextResponse(JSON.stringify(address));
 }

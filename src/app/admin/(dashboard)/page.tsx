@@ -1,6 +1,6 @@
 "use client";
 
-import Tile, { TileSkeleton } from "@/components/admin/Tile";
+import Tile from "@/components/admin/Tile";
 import { BarChart, DoughnutChart } from "@/components/admin/Charts";
 import DashboardTable from "@/components/admin/DashboardTable";
 import data from "./data.json";

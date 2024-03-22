@@ -9,10 +9,12 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
     if (!session?.user) {
         return new NextResponse("unauthenticated");
     }
+    await prisma.$connect();
 
     const addresses = await prisma.user.findUnique({ where: { id: session?.user?.id }, select: { cart: { select: { id: true } } } });
 
     if (!addresses || !addresses.cart.find(a => a.id === id)) {
+        await prisma.$disconnect();
         return new NextResponse("unauthorised");
     }
 
@@ -23,11 +25,13 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
         select: { product: true, id: true, quantity: true },
     });
 
+    await prisma.$disconnect();
     return new NextResponse(JSON.stringify(products));
 }
 
 export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
     try {
+        await prisma.$connect();
         const id = Number.parseInt(params.id);
         const session = await auth();
 
@@ -51,5 +55,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
         return new NextResponse("success");
     } catch (error: any) {
         return new NextResponse(error.message);
+    } finally {
+        await prisma.$disconnect();
     }
 }

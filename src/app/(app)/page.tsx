@@ -22,10 +22,14 @@ export default async function Home() {
     ? true
     : false;
 
+  await prisma.$connect();
+
   const [categories, products] = await prisma.$transaction([
     prisma.category.findMany(),
     prisma.product.findMany(),
   ]);
+
+  await prisma.$disconnect();
 
   return (
     <>
